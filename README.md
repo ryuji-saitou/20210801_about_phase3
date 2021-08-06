@@ -35,7 +35,7 @@
 - 自分が気づいていないけど本当は楽しいこと・好きなことを模索したい時
 
 ## 設計書
-<...>
+テーブル定義書：https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing
 
 ## チャレンジ要素一覧
 [外部リンク(googleスプレッドシート)を参照](https://docs.google.com/spreadsheets/d/1BkMUnL6wkStNWFZMsXqk6fRymK1LdaT3vuIrPt6fOW8/edit?usp=sharing)
