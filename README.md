@@ -37,6 +37,7 @@
 ## 設計書
 |作成物|
 |:----|
+|[WBS](https://docs.google.com/spreadsheets/d/1bnbBjizJoHWqXNCztGhgch5O8kYvRYIHx7Mcc3n0m1c/edit?usp=sharing)|
 |[ワイヤーフレーム](https://drive.google.com/file/d/17st_PL3T-3-uAyqTJoFQAlc4OMQfpdNK/view?usp=sharing)|
 |[ER図](https://drive.google.com/file/d/12PufPQyxhqyeGBKAvogefcdwIJKk6vYA/view?usp=sharing)|
 |[テーブル定義書](https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing)|
