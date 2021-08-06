@@ -35,8 +35,12 @@
 - 自分が気づいていないけど本当は楽しいこと・好きなことを模索したい時
 
 ## 設計書
-ER図：https://drive.google.com/file/d/12PufPQyxhqyeGBKAvogefcdwIJKk6vYA/view?usp=sharing
-テーブル定義書：https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing
+|作成物|
+|:----|
+|ワイヤーフレーム|
+|[ER図](https://drive.google.com/file/d/12PufPQyxhqyeGBKAvogefcdwIJKk6vYA/view?usp=sharing)|
+|[テーブル定義書](https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing)|
+|アプリケーション詳細設計|
 
 ## チャレンジ要素一覧
 [外部リンク(googleスプレッドシート)を参照](https://docs.google.com/spreadsheets/d/1BkMUnL6wkStNWFZMsXqk6fRymK1LdaT3vuIrPt6fOW8/edit?usp=sharing)
