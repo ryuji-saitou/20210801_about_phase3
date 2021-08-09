@@ -31,6 +31,6 @@
 /config/master.key
 
 # ===ここから齋藤記述===
-.DS_Store
-.env
+/.DS_Store
+/.env
 # ===ここまで齋藤記述===
