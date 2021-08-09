@@ -1,5 +1,4 @@
 class Public::PostsController < ApplicationController
-
   def new
   end
 
@@ -14,5 +13,4 @@ class Public::PostsController < ApplicationController
 
   def destroy
   end
-
 end

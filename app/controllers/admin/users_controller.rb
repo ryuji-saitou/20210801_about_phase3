@@ -1,5 +1,4 @@
 class Admin::UsersController < ApplicationController
-
   def index
   end
 
@@ -8,5 +7,4 @@ class Admin::UsersController < ApplicationController
 
   def update
   end
-
 end

@@ -1,5 +1,4 @@
 class Public::UsersController < ApplicationController
-
   def show
   end
 
@@ -8,5 +7,4 @@ class Public::UsersController < ApplicationController
 
   def update
   end
-
 end

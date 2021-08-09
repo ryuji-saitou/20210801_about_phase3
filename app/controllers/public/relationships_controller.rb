@@ -1,5 +1,4 @@
 class Public::RelationshipsController < ApplicationController
-
   def create
   end
 
@@ -11,5 +10,4 @@ class Public::RelationshipsController < ApplicationController
 
   def followers
   end
-
 end

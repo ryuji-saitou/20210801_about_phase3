@@ -1,5 +1,4 @@
 class Public::ReportsController < ApplicationController
-
   def post_report_create
   end
 
@@ -11,5 +10,4 @@ class Public::ReportsController < ApplicationController
 
   def comment_report_destroy
   end
-
 end
