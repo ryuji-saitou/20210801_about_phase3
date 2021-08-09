@@ -29,3 +29,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# ===ここから齋藤記述===
+.DS_Store
+.env
+# ===ここまで齋藤記述===
