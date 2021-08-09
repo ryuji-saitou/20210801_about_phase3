@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # ===ここからdevise側のルーティング===
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     # "新規登録"・"ログイン"・"ログアウト"のみ使用
