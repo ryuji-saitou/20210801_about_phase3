@@ -30,11 +30,19 @@
             </tr>
             <tr class="border-bottom">
               <td>フォロー数</td>
-              <td>xx</td>
+              <td>
+                <%= link_to user_followings_path(@user.id) do %>
+                  xx
+                <% end %>
+              </td>
             </tr>
             <tr class="border-bottom">
               <td>フォロワー数</td>
-              <td>xx</td>
+              <td>
+                <%= link_to user_followers_path(@user.id) do %>
+                  xx
+                <% end %>
+              </td>
             </tr>
             <tr>
               <td colspan="2" class="small text-secondary text-right">※<%= @user.created_at %>から利用しています</td>

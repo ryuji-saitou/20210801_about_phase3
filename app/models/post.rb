@@ -5,4 +5,10 @@ class Post < ApplicationRecord
   has_many   :comments, dependent: :destroy
   has_many   :favorites, dependent: :destroy
   belongs_to :user
+
+  validates :user_id      , presence: true
+  validates :action       , presence: true
+  validates :time_required, presence: true
+  validates :budget       , presence: true
+  validates :is_hided     , presence: true
 end
