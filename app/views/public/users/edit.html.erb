@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>Profile edit</h3>
+      <div class="border p-3">
+        <%= form_with model: @user, local: true do |f| %>
+        <table class="table table-borderless">
+          <tr class="border-bottom">
+            <td class="align-bottom">プロフィール画像</td>
+            <td>
+              <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %><br><br>
+              <%= f.attachment_field :profile_image %>
+            </td>
+          </tr>
+          <tr class="border-bottom">
+            <td>ユーザー名</td>
+            <td><%= f.text_field :user_name %></td>
+          </tr>
+          <tr class="border-bottom">
+            <td>ユーザーID</td>
+            <td><%= f.text_field :user_name_id %></td>
+          </tr>
+          <tr class="border-bottom">
+            <td>プロフィール</td>
+            <td><%= f.text_field :profile_introduction %></td>
+          </tr>
+          <tr>
+            <td>Link</td>
+            <td><%= f.text_field :profile_sns_link %></td>
+          </tr>
+        </table>
+        <div class="text-center">
+          <%= f.submit "更新する", class:"btn btn-sm" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
