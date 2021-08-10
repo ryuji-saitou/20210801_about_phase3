@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-8">
+    <div class="col-8 mx-auto">
 
       <h2>Sign up</h2>
 
@@ -8,27 +8,27 @@
         <%= render "users/shared/error_messages", resource: resource %>
 
         <div class="field">
-          <%= f.label :user_name %><br />
+          <%= f.label :user_name, "ユーザー名" %><br />
           <%= f.text_field :user_name, autocomplete: "user_name" %>
         </div>
 
         <div class="field">
-          <%= f.label :user_name_id, "User_name_id" %><br />
+          <%= f.label :user_name_id, "ユーザーID" %><br />
           <%= f.text_field :user_name_id, autocomplete: "user_name_id" %>
         </div>
 
         <div class="field">
-          <%= f.label :birthday %><br />
+          <%= f.label :birthday, "生年月日" %><br />
           <%= f.date_select :birthday, use_month_numbers: true,start_year: 1930, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1) %>
         </div>
 
         <div class="field">
-          <%= f.label :email %><br />
+          <%= f.label :email, "メールアドレス" %><br />
           <%= f.email_field :email, autocomplete: "email" %>
         </div>
 
         <div class="field">
-          <%= f.label :password %>
+          <%= f.label :password, "パスワード(6文字以上)" %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %><br />
@@ -36,7 +36,7 @@
         </div>
 
         <div class="field">
-          <%= f.label :password_confirmation %><br />
+          <%= f.label :password_confirmation, "パスワード確認" %><br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
         </div>
 
