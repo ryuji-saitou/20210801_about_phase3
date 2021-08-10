@@ -8,7 +8,8 @@ class Public::PostsController < ApplicationController
   end
 
   def back
-    # confirmで"戻る"を選択した場合
+    @post = Post.new(post_params)
+    render :new
   end
 
   def create
@@ -23,6 +24,6 @@ class Public::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:aciton, :post_image, :time_required, :budget)
+    params.require(:post).permit(:action, :post_image, :time_required, :budget)
   end
 end

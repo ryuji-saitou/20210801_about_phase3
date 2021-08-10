@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:new, :create, :show, :destroy] do
       collection do
         post "confirm"
+        post "back"
       end
       post "/reports", to: "reports#post_report_create", as: "post_report_create"
       delete "/reports/:id", to: "reports#post_report_destroy", as: "post_report_destroy"
