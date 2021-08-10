@@ -10,6 +10,50 @@
   </head>
 
   <body>
+
+    <header>
+      <nav class="navbar navbar-expand bg-light">
+        <span class="navbar-brand">My Luxury Time</span>
+        <% if admin_signed_in? %>
+          <div class="navbar-nav mr-auto">
+            <%= link_to "会員一覧", admin_users_path, class:"nav-item nav-link" %>
+            <%= link_to "通報一覧", admin_reports_path, class:"nav-item nav-link" %>
+          </div>
+          <div class="navbar-nav">
+            <%= link_to "Log out", destroy_admin_user_session_path, method: :delete, class:"nav-item nav-link" %>
+          </div>
+        <% elsif user_signed_in? %>
+          <div class="navbar-nav mr-auto">
+            <%= link_to "Home", root_path, class:"nav-item nav-link" %>
+            <%= link_to "About", about_path, class:"nav-item nav-link" %>
+            <%= link_to "Ranking", ranking_path, class:"nav-item nav-link" %>
+            <%= link_to "New post", ranking_path, class:"nav-item nav-link" %>
+            <%= link_to "Search", root_path, class:"nav-item nav-link" %>
+          </div>
+          <div class="navbar-nav">
+            <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link" %>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link" %>
+          </div>
+        <% else %>
+          <div class="navbar-nav mr-auto">
+            <%= link_to "Home", root_path, class:"nav-item nav-link" %>
+            <%= link_to "About", about_path, class:"nav-item nav-link" %>
+            <%= link_to "Ranking", ranking_path, class:"nav-item nav-link" %>
+          </div>
+          <div class="navbar-nav">
+            <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link" %>
+            <%= link_to "Sign up", new_user_registration_path, class:"nav-item nav-link" %>
+          </div>
+        <% end %>
+      </nav>
+    </header>
+
+    <p><%= notice %></p>
+    <p><%= alert %></p>
     <%= yield %>
+
+    <footer class="bg-light py-3">
+    </footer>
+
   </body>
 </html>
