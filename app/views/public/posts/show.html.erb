@@ -27,7 +27,7 @@
           </tr>
           <tr>
             <td>投稿内容</td>
-            <td><%= @post.action %></td>
+            <td><%= simple_format(h(@post.action)) %></td>
           </tr>
           <tr>
             <td>所要時間</td>
@@ -46,6 +46,19 @@
                 <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
               <% end %>
             </td>
+            <tr>
+              <td colspan="2">
+                <% if @post.user == current_user %>
+                  <%= link_to edit_post_path(@post) do %>
+                    <strong><i class="fas fa-edit h3"></i></strong>
+                  <% end %>
+                  <span>　</span>
+                  <%= link_to post_path(@post), method: :delete, data: {confirm: "投稿を削除しますか？"} do %>
+                    <strong><i class="fas fa-trash-alt text-danger h3"></i></strong>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
           </tr>
         </table>
       </div>
@@ -70,14 +83,19 @@
           <div class="post_comments">
             <% @post.comments.each do |comment| %>
               <%= link_to user_path(comment.user.id) do %>
-                <div class="row">
+                <div class="row border-bottom py-3">
                   <div class="col-auto">
                     <%= attachment_image_tag comment.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
                   </div>
                   <div class="col-auto">
                     <%= comment.user.user_name %>
                     <span class="small text-secondary">　(<%= comment.user.user_name_id %>)</span><br>
-                    <%= comment.comment %>
+                    <%= comment.comment %><br>
+                    <% if comment.user == current_user %>
+                      <%= link_to post_comment_path(comment.post, comment), method: :delete, data: {confirm: "コメントを削除しますか？"} do %>
+                        <span class="text-right"><i class="fas fa-trash-alt text-danger"></i></span>
+                      <% end %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>

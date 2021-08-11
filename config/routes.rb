@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get "followings", to: "relationships#followings", as: "followings"
       get "followers", to: "relationships#followers", as: "followers"
     end
-    resources :posts, only: [:new, :create, :show, :destroy] do
+    resources :posts, only: [:new, :create, :edit, :update, :show, :destroy] do
       collection do
         post "confirm"
         post "back"

@@ -51,7 +51,7 @@
                       <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %><br>
                       <%= post.user.user_name %>
                       <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span><br>
-                      <span><%= simple_format(h(post.action)) %></span><br>
+                      <span><%= simple_format(h(post.action)) %></span>
                       <span class="small">予算：<%= post.time_required %>円</span>
                       <span class="small"> / </span>
                       <span class="small">所要時間：<%= post.budget %>分</span><br>
@@ -90,7 +90,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <span><%= post.action %></span><br>
+                          <%= post.action %>
                           <span class="small">予算：<%= post.time_required %></span>
                           <span class="small"> / </span>
                           <span class="small">所要時間：<%= post.budget %></span>

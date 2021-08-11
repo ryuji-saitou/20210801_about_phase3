@@ -22,12 +22,24 @@ class Public::PostsController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    @post = Post.find(params[:id])
+    Post.find(params[:id]).update(post_params)
+    redirect_to post_path(@post)
+  end
+
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new
   end
 
   def destroy
+    Post.find(params[:id]).destroy
+    redirect_to user_path(current_user.id)
   end
 
   private
