@@ -33,7 +33,7 @@ Rails.application.routes.draw do
         post "/reports", to: "reports#comment_report_create", as: "comment_report_create"
         delete "/reports/:id", to: "reports#comment_report_destroy", as: "comment_report_destroy"
       end
-      resources :favorites, only: [:create, :destroy]
+      resource :favorites, only: [:create, :destroy]
     end
     get "/ranking", to: "rankings#ranking", as: "ranking"
     post "/ranking", to: "rankings#ranking_search", as: "ranking_search"

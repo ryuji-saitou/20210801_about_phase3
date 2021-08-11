@@ -12,8 +12,18 @@
               <span class="small text-secondary">ユーザーID：<%= current_user.user_name_id %></span>
             </div>
             <div class="col-auto mx-auto">
-              <span>フォロー　：xx名</span><br>
-              <span>フォロワー：xx名</span>
+              <span>
+                フォロー　：
+                <%= link_to user_followings_path(current_user) do %>
+                  <%= current_user.followings.count %>
+                <% end %>
+              </span><br>
+              <span>
+                フォロワー：
+                <%= link_to user_followers_path(current_user) do %>
+                  <%= current_user.followers.count %>
+                <% end %>
+              </span>
             </div>
           </div>
         </div>
@@ -37,34 +47,25 @@
               <% @posts.each do |post| %>
                 <%= link_to post_path(post.id) do %>
                   <div class="row border-bottom py-3">
-                    <div class="col-auto">
-                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                    <div class="col-8">
+                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %><br>
+                      <%= post.user.user_name %>
+                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span><br>
+                      <span><%= simple_format(h(post.action)) %></span><br>
+                      <span class="small">予算：<%= post.time_required %>円</span>
+                      <span class="small"> / </span>
+                      <span class="small">所要時間：<%= post.budget %>分</span><br>
+                      <span>
+                        <% if post.favorited_by?(current_user) %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                        <% else %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+                        <% end %>
+                      </span><br>
+                      <span>コメント： <%= post.comments.count %> 件</span>
                     </div>
-                    <div class="col-auto">
-                      <div class="row">
-                        <div class="col">
-                          <%= post.user.user_name %>
-                          <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <span><%= post.action %></span><br>
-                          <span class="small">予算：<%= post.time_required %></span>
-                          <span class="small"> / </span>
-                          <span class="small">所要時間：<%= post.budget %></span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <span>コメント： xx 件</span>
-                          <span> / </span>
-                          <span>いいね： xx 件</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <%= attachment_image_tag post, :post_image, :fill, 100, 100 %>
+                    <div class="col-4">
+                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
                     </div>
                   </div>
                 <% end %>
@@ -97,9 +98,9 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <span>コメント： xx 件</span>
+                          <span>いいね： <%= post.favorites.count %></span>
                           <span> / </span>
-                          <span>いいね： xx 件</span>
+                          <span>コメント： <%= post.comments.count %> 件</span>
                         </div>
                       </div>
                     </div>
@@ -159,9 +160,14 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <span>コメント： xx 件</span>
+                          <span>コメント： <%= post.comments.count %> 件</span>
                           <span> / </span>
-                          <span>いいね： xx 件</span>
+                          <span>
+                            <span class="btn btn-sm btn-danger">
+                              ♡
+                            </span>
+                            ： <%= post.favorites.count %>
+                          </span>
                         </div>
                       </div>
                     </div>
