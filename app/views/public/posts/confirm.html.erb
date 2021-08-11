@@ -8,14 +8,14 @@
         <table class="table table-borderless">
           <tr>
             <td>私の贅沢な時間の使い方</td>
-            <td><%= @post.action %></td>
+            <td><%=safe_join(@post.action.split("\n"),tag(:br))%></td>
           </tr>
           <tr>
             <td>イメージ画像</td>
             <% if @post.post_image.blank? %>
               <td>画像無し</td>
             <% else %>
-              <td><%= attachment_image_tag @post, :post_image %></td>
+              <td><%= attachment_image_tag @post, :post_image, :fill, 100, 100 %></td>
             <% end %>
           </tr>
           <tr>
@@ -30,7 +30,7 @@
         <div class="text-center">
           <%= form_with model: @post, method: :post, url: back_posts_path, local: true do |f| %>
             <%= f.hidden_field :action %>
-            <%= f.hidden_field :post_image %>
+            <%= f.hidden_field :post_image_cache %>
             <%= f.hidden_field :time_required %>
             <%= f.hidden_field :budget %>
             <%= f.submit "編集する", class:"col-3 mx-3" %>
@@ -38,7 +38,7 @@
           <div class="py-1"><!--上下余白div--></div>
           <%= form_with model: @post, method: :post, url: posts_path, local: true do |f| %>
             <%= f.hidden_field :action %>
-            <%= f.hidden_field :post_image %>
+            <%= f.hidden_field :post_image_cache %>
             <%= f.hidden_field :time_required %>
             <%= f.hidden_field :budget %>
             <%= f.submit "投稿する", class:"col-3 mx-3" %>

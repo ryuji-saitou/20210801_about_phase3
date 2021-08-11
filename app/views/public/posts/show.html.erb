@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>Post detail</h3>
+      <div class="border p-3">
+        <h5><strong>投稿内容</strong></h5>
+        <table class="table table-borderless">
+          <tr>
+            <td>イメージ画像</td>
+            <td class="text-center">
+              <% if @post.post_image.blank? %>
+                <span>-</span>
+              <% else %>
+                <%= attachment_image_tag @post, :post_image, :fill, 300, 300 %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              投稿ユーザー<br>
+              <span class="small text-secondary">(ユーザーID)</span>
+            </td>
+            <td>
+              <%= @post.user.user_name %><br>
+              <span class="small text-secondary">(<%= @post.user.user_name_id %>)</span>
+            </td>
+          </tr>
+          <tr>
+            <td>投稿内容</td>
+            <td><%= @post.action %></td>
+          </tr>
+          <tr>
+            <td>所要時間</td>
+            <td><%= @post.time_required %></td>
+          </tr>
+          <tr>
+            <td>予算</td>
+            <td><%= @post.budget %></td>
+          </tr>
+          <tr>
+            <td>いいね</td>
+            <td><%= @post.favorites.count %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="my-3"></div>
+      <div class="border p-3">
+        <h5><strong>コメント投稿</strong></h5>
+        <div class="row">
+          <div class="col-12 text-right">
+            <%= form_with model:[@post, @comment], local: true do |f| %>
+              <%= f.text_area :comment, class:"col-12" %><br>
+              <%= f.submit "コメント投稿" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-11 mx-auto my-3 border"></div>
+        <h5><strong>コメント一覧</strong></h5>
+        <% if @post.comments.blank? %>
+          <div class="col-auto text-center">
+            <span>まだコメントはありません</span>
+          </div>
+        <% else %>
+          <div class="post_comments">
+            <% @post.comments.each do |comment| %>
+              <%= link_to user_path(comment.user.id) do %>
+                <div class="row">
+                  <div class="col-auto">
+                    <%= attachment_image_tag comment.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                  </div>
+                  <div class="col-auto">
+                    <%= comment.user.user_name %>
+                    <span class="small text-secondary">　(<%= comment.user.user_name_id %>)</span><br>
+                    <%= comment.comment %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

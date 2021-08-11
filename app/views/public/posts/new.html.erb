@@ -4,7 +4,8 @@
       <h3>New post</h3>
       <div class="border p-3">
         <h5><strong>投稿内容</strong></h5>
-        <%= form_with model: @post, method: :post, url: confirm_posts_path, local: true do |f| %>
+        <!--<#%= form_with model: @post, method: :post, url: confirm_posts_path, local: true do |f| %>-->
+        <%= form_with model: @post, url: posts_path, local: true do |f| %>
           <table class="table table-borderless">
             <tr>
               <td><%= f.label :action, "私の贅沢な時間の使い方" %></td>

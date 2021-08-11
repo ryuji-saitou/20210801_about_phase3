@@ -10,5 +10,4 @@ class Post < ApplicationRecord
   validates :action       , presence: true
   validates :time_required, presence: true
   validates :budget       , presence: true
-  validates :is_hided     , presence: true
 end
