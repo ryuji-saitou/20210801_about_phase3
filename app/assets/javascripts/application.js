@@ -14,10 +14,10 @@
 //= require popper
 //= require bootstrap-sprockets
 
+//= require jquery
+// require jquery_ujs ※"rails-ujs"と干渉してエラーが生じるためOFF
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 
-//= require jquery
-//= require jquery_ujs

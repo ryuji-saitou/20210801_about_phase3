@@ -38,6 +38,13 @@ Rails.application.routes.draw do
     get "/ranking", to: "rankings#ranking", as: "ranking"
     post "/ranking", to: "rankings#ranking_search", as: "ranking_search"
     get "/search", to: "searches#search", as: "search"
+    resources :contacts, only: [:new, :create] do
+      collection do
+        post "confirm", to: "contacts#confirm", as: "confirm"
+        post "back", to: "contacts#back", as: "back"
+        get "done", to: "contacts#done", as: "done"
+      end
+    end
   end
 
   # admin側ルーティング

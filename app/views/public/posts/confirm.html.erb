@@ -28,7 +28,7 @@
           </tr>
         </table>
         <div class="text-center">
-          <%= form_with model: @post, method: :post, url: back_posts_path, local: true do |f| %>
+          <%= form_with model: @post, method: :post, url: back_contacts_path, local: true do |f| %>
             <%= f.hidden_field :action %>
             <%= f.hidden_field :post_image_cache %>
             <%= f.hidden_field :time_required %>
@@ -36,7 +36,7 @@
             <%= f.submit "編集する", class:"col-3 mx-3" %>
           <% end %>
           <div class="py-1"><!--上下余白div--></div>
-          <%= form_with model: @post, method: :post, url: posts_path, local: true do |f| %>
+          <%= form_with model: @post, method: :post, url: contacts_path, method: :delete, local: true do |f| %>
             <%= f.hidden_field :action %>
             <%= f.hidden_field :post_image_cache %>
             <%= f.hidden_field :time_required %>
