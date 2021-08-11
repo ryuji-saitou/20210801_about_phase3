@@ -24,7 +24,7 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :follower # followers  = followed_idを経由して follower(user)_id を参照
 
   def follow(user_id)
-    relationship.create(followed_id: user_id)
+    relationships.create(followed_id: user_id)
   end
 
   def unfollow(user_id)
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   end
 
   def following?(user)
-    followgings.include?(user)
+    followings.include?(user)
   end
   # ▲フォロー・フォロワーに関する記述
 
