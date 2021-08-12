@@ -35,8 +35,8 @@ Rails.application.routes.draw do
       end
       resource :favorites, only: [:create, :destroy]
     end
-    get "/ranking", to: "rankings#ranking", as: "ranking"
-    post "/ranking", to: "rankings#ranking_search", as: "ranking_search"
+    resources :rankings, only: [:index]
+    get "/rankings/result", to: "rankings#result", as: "ranking_result"
     get "/search", to: "searches#search", as: "search"
     resources :contacts, only: [:new, :create] do
       collection do
