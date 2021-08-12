@@ -28,10 +28,10 @@ Rails.application.routes.draw do
         post "back"
       end
       post "/reports", to: "reports#post_report_create", as: "post_report_create"
-      delete "/reports/:id", to: "reports#post_report_destroy", as: "post_report_destroy"
+      delete "/reports", to: "reports#post_report_destroy", as: "post_report_destroy"
       resources :comments, only: [:create, :destroy] do
         post "/reports", to: "reports#comment_report_create", as: "comment_report_create"
-        delete "/reports/:id", to: "reports#comment_report_destroy", as: "comment_report_destroy"
+        delete "/reports/", to: "reports#comment_report_destroy", as: "comment_report_destroy"
       end
       resource :favorites, only: [:create, :destroy]
     end

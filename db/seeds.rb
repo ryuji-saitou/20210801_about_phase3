@@ -10,8 +10,11 @@
 # ==="rails db:seed" 前に必ず "rails db:migrate:reset"==========
 # ==============================================================
 
+# ▼Adminテーブル作成
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
 # ▼Userテーブル作成
-10.times do |number|
+5.times do |number|
   User.create!(
     user_name: "seed_test@test#{number + 1}",
     user_name_id: "seed_test@test#{number + 1}",
@@ -23,19 +26,14 @@
 end
 
 # ▼Postテーブル作成
-10.times do |number|
-  User.all.each do |user|
-    3.times do |number|
-      Post.create!(
-        user_id: "#{number + 1}",
-        action: "action_#{number + 1}",
-        time_required: "#{number + 1}",
-        budget: "#{number + 1}",
-        is_hided: "false"
-      )
-    end
+User.all.each do |user|
+  3.times do |number|
+    Post.create!(
+      user_id: "#{number + 1}",
+      action: "action_#{number + 1}",
+      time_required: "#{number + 1}",
+      budget: "#{number + 1}",
+      is_hided: "false"
+    )
   end
 end
-
-# ▼Adminテーブル作成
-# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

@@ -49,13 +49,18 @@
             <tr>
               <td colspan="2">
                 <% if @post.user == current_user %>
-                  <%= link_to edit_post_path(@post) do %>
+                  <%= link_to edit_post_path(@post), class:"text-decoration-none" do %>
                     <strong><i class="fas fa-edit h3"></i></strong>
                   <% end %>
                   <span>　</span>
-                  <%= link_to post_path(@post), method: :delete, data: {confirm: "投稿を削除しますか？"} do %>
+                  <%= link_to post_path(@post), method: :delete, class:"text-decoration-none", data: {confirm: "投稿を削除しますか？"} do %>
                     <strong><i class="fas fa-trash-alt text-danger h3"></i></strong>
                   <% end %>
+                <% end %>
+                <% if @post.reported_by?(current_user) %>
+                  <span>　</span><%= link_to "通報取消", post_post_report_destroy_path(post_id: @post), method: :delete, class:"text-secondary small text-right" %>
+                <% else %>
+                  <span>　</span><%= link_to "通報", post_post_report_create_path(post_id: @post.id), method: :post, class:"text-secondary small text-right" %>
                 <% end %>
               </td>
             </tr>
@@ -90,11 +95,18 @@
                   <div class="col-auto">
                     <%= comment.user.user_name %>
                     <span class="small text-secondary">　(<%= comment.user.user_name_id %>)</span><br>
-                    <%= comment.comment %><br>
+                    <span><%= simple_format(h(comment.comment)) %></span>
                     <% if comment.user == current_user %>
                       <%= link_to post_comment_path(comment.post, comment), method: :delete, data: {confirm: "コメントを削除しますか？"} do %>
                         <span class="text-right"><i class="fas fa-trash-alt text-danger"></i></span>
                       <% end %>
+                    <% end %>
+                    <% if comment.reported_by?(current_user, @post) %>
+                      <span>　</span>
+                      <%= link_to "通報取消", post_comment_comment_report_destroy_path(post_id: @post, comment_id: comment.id), method: :delete, class:"text-secondary small text-right" %>
+                    <% else %>
+                      <span>　</span>
+                      <%= link_to "通報", post_comment_comment_report_create_path(post_id: @post.id, comment_id: comment.id), method: :post, class:"text-secondary small text-right" %>
                     <% end %>
                   </div>
                 </div>

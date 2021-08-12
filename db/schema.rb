@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2021_08_09_121739) do
     t.integer "user_id", null: false
     t.integer "post_id", null: false
     t.integer "comment_id"
-    t.text "reason", null: false
+    t.text "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

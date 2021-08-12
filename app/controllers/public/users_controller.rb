@@ -23,5 +23,4 @@ class Public::UsersController < ApplicationController
       :profile_sns_link
     )
   end
-
 end

@@ -13,8 +13,8 @@
         <div class="border p-3">
           <table class="table table-borderless">
             <tr class="border-bottom">
-              <td>プロフィール画像</td>
-              <td><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
+              <td class="col-4">プロフィール画像</td>
+              <td class="col-8"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
             </tr>
             <tr class="border-bottom">
               <td>ユーザー名 <span class="small text-secondary">(ID)</span></td>
@@ -29,7 +29,7 @@
             </tr>
             <tr class="border-bottom">
               <td>Link</td>
-              <td><%= @user.profile_sns_link %></td>
+              <td><%= link_to "#{@user.profile_sns_link}", "#{@user.profile_sns_link}" %></td>
             </tr>
             <tr class="border-bottom">
               <td>フォロー数</td>
@@ -60,8 +60,8 @@
         <div class="border p-3">
           <table class="table">
             <tr>
-              <td>プロフィール画像</td>
-              <td><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
+              <td class="col-4">プロフィール画像</td>
+              <td class="col-8"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
             </tr>
             <tr>
               <td>ユーザー名(ID)</td>
@@ -69,9 +69,9 @@
                 <%= @user.user_name %>
                 <span class="small text-secondary"> (<%= @user.user_name_id %>)　　 </span>
                 <% if current_user.following?(@user) %>
-                  <%= link_to "フォロー中", user_relationship_path(user_id: @user), method: :delete, class:"btn btn-info text-white text-decoration-none" %>
+                  <%= link_to "フォロー中", user_relationship_path(user_id: @user), method: :delete, class:"btn btn-sm btn-info text-white text-decoration-none" %>
                 <% else %>
-                  <%= link_to "フォローする", user_relationships_path(user_id: @user), method: :post, class:"btn btn-secondary text-white text-decoration-none" %>
+                  <%= link_to "フォローする", user_relationships_path(user_id: @user), method: :post, class:"btn btn-sm btn-secondary text-white text-decoration-none" %>
                 <% end %>
               </td>
             </tr>
@@ -81,7 +81,7 @@
             </tr>
             <tr class="border-bottom">
               <td>Link</td>
-              <td><%= @user.profile_sns_link %></td>
+              <td><%= link_to "#{@user.profile_sns_link}", "#{@user.profile_sns_link}" %></td>
             </tr>
             <tr class="border-bottom">
               <td>フォロー数</td>
