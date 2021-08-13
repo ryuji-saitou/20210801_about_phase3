@@ -10,14 +10,27 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 
+//= require jquery
 //= require jquery3
+//= require jquery_ujs
+//= require jquery.jscroll.min.js
 //= require popper
 //= require bootstrap-sprockets
 
-//= require jquery
-// require jquery_ujs ※"rails-ujs"と干渉してエラーが生じるためOFF
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 
+// ▼無限スクロール
+$(window).on('scroll', function() {
+  scrollHeight = $(document).height();
+  scrollPosition = $(window).height() + $(window).scrollTop();
+  if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+    $('.jscroll').jscroll({
+      contentSelector: '.scroll-list',  // 読み込んだ要素を追加するクラス
+      nextSelector: 'span.next:last a'
+    });
+  }
+});
+// ▲無限スクロール

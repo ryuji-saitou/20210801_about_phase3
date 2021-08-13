@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# ==============================================================
-# ==="rails db:seed" 前に必ず "rails db:migrate:reset"==========
-# ==============================================================
+# =============================
+# ======"rails db:reset"=======
+# =============================
 
 # ▼Adminテーブル作成
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
@@ -26,13 +26,15 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
 end
 
 # ▼Postテーブル作成
+i = 0
 User.all.each do |user|
-  3.times do |number|
+  10.times do
+    i += 1
     Post.create!(
-      user_id: "#{number + 1}",
-      action: "action_#{number + 1}",
-      time_required: "#{number + 1}",
-      budget: "#{number + 1}",
+      user_id: "#{user.id}",
+      action: "#{i}_action_#{user.id}",
+      time_required: "#{user.id}",
+      budget: "#{user.id}",
       is_hided: "false"
     )
   end

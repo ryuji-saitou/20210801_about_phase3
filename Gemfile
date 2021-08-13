@@ -73,3 +73,4 @@ gem 'pry-byebug'
 gem 'activeadmin'
 gem 'dotenv-rails'
 gem 'cancancan'
+gem "kaminari"

@@ -43,7 +43,52 @@
           <div class="tab-content">
 
             <!--▼タイムライン投稿表示-->
-            <div id="tab1" class="tab-pane active">
+            <div id="tab1" class="tab-pane active scroll-list jscroll">
+              <% @posts.each do |post| %>
+                <%= link_to post_path(post.id) do %>
+                  <div class="row border-bottom py-3">
+                    <div class="col-8">
+                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                      <br>
+                      <%= post.user.user_name %>
+                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                      <br>
+                      <span class="small">予算：<%= post.time_required %>円</span>
+                      <span class="small"> / </span>
+                      <span class="small">所要時間：<%= post.budget %>分</span>
+                      <br>
+                      <span><%= simple_format(h(post.action)) %></span>
+                      <span>
+                        <% if post.favorited_by?(current_user) %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                        <% else %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+                        <% end %>
+                      </span>
+                      <%= link_to post_path(post.id) do %>
+                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+                      <% end %>
+                      <br>
+                      <span>
+                        <% if post.reported_by?(current_user) %>
+                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                        <% else %>
+                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
+                        <% end %>
+                      </span>
+                    </div>
+                    <div class="col-4 border">
+                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+              <%= paginate @posts %>
+            </div>
+            <!--▲タイムライン投稿表示-->
+
+            <!--▼最新投稿表示-->
+            <div id="tab2" class="tab-pane scroll-list jscroll">
               <% @posts.each do |post| %>
                 <%= link_to post_path(post.id) do %>
                   <div class="row border-bottom py-3">
@@ -83,46 +128,7 @@
                   </div>
                 <% end %>
               <% end %>
-            </div>
-            <!--▲タイムライン投稿表示-->
-
-            <!--▼最新投稿表示-->
-            <div id="tab2" class="tab-pane">
-              <% @posts.each do |post| %>
-                <%= link_to post_path(post.id) do %>
-                  <div class="row border-bottom py-3">
-                    <div class="col-auto">
-                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                    </div>
-                    <div class="col-auto">
-                      <div class="row">
-                        <div class="col">
-                          <%= post.user.user_name %>
-                          <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <%= post.action %>
-                          <span class="small">予算：<%= post.time_required %></span>
-                          <span class="small"> / </span>
-                          <span class="small">所要時間：<%= post.budget %></span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <span>いいね： <%= post.favorites.count %></span>
-                          <span> / </span>
-                          <span>コメント： <%= post.comments.count %> 件</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <%= attachment_image_tag post, :post_image, :fill, 100, 100 %>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
+              <%= paginate @posts %>
             </div>
             <!--▲最新投稿表示-->
 
@@ -139,59 +145,41 @@
         <!--▼タブ内容-->
         <div class="nav-flame border p-3">
 
-          <!--▼タブ表題-->
+          <!--▼タブタイトル-->
           <ul class="nav nav-tabs nav-justified mx-auto">
             <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">最新投稿</a></li>
           </ul>
-          <!--▲タブ表題-->
+          <!--▲タブタイトル-->
 
-          <!--▼タブ詳細-->
+          <!--▼タブ詳細(最新投稿表示のみ)-->
           <div class="tab-content">
-            <div id="tab1" class="tab-pane active">
-
-              <!--▼最新投稿表示-->
+            <div id="tab1" class="tab-pane active scroll-list jscroll">
               <% @posts.each do |post| %>
                 <%= link_to post_path(post.id) do %>
                   <div class="row border-bottom py-3">
-                    <div class="col-auto">
+                    <div class="col-8">
                       <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                      <br>
+                      <%= post.user.user_name %>
+                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                      <br>
+                      <span class="small">予算：<%= post.time_required %>円</span>
+                      <span class="small"> / </span>
+                      <span class="small">所要時間：<%= post.budget %>分</span>
+                      <br>
+                      <span><%= simple_format(h(post.action)) %></span>
+                      <%= link_to "♡#{post.favorites.count}", user_session_path, class:"btn btn-sm btn-secondary text-white", data: {confirm: "ログインユーザーのみ利用できます"} %>
+                      <%= link_to post_path(post.id) do %>
+                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+                      <% end %>
                     </div>
-                    <div class="col-auto">
-                      <div class="row">
-                        <div class="col">
-                          <%= post.user.user_name %>
-                          <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <span><%= post.action %></span><br>
-                          <span class="small">予算：<%= post.time_required %></span>
-                          <span class="small"> / </span>
-                          <span class="small">所要時間：<%= post.budget %></span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <span>コメント： <%= post.comments.count %> 件</span>
-                          <span> / </span>
-                          <span>
-                            <span class="btn btn-sm btn-danger">
-                              ♡
-                            </span>
-                            ： <%= post.favorites.count %>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <%= attachment_image_tag post, :post_image, :fill, 100, 100 %>
+                    <div class="col-4 border">
+                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
                     </div>
                   </div>
                 <% end %>
               <% end %>
-              <!--▲最新投稿表示-->
-
+              <%= paginate @posts %>
             </div>
           </div>
           <!--▲タブ詳細-->

@@ -37,3 +37,10 @@
 .text-decoration-none {
   text-decoration: none;
 }
+
+// ▼無限スクロールに関する記述
+// kaminariページ表示オフ
+nav.pagination {
+  display: none;
+}
+// ▲無限スクロールに関する記述
