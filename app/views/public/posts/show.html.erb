@@ -6,12 +6,16 @@
         <h5><strong>投稿内容</strong></h5>
         <table class="table table-borderless">
           <tr>
-            <td>イメージ画像</td>
-            <td class="text-center">
-              <% if @post.post_image.blank? %>
+            <td class="col-4">イメージ画像</td>
+            <td class="col-8 text-center">
+              <% if @post.post_images.blank? %>
                 <span>-</span>
               <% else %>
-                <%= attachment_image_tag @post, :post_image, :fill, 300, 300 %>
+                <% if @post.post_images.present? %>
+                  <% @post.post_images.each do |image| %>
+                    <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                  <% end %>
+                <% end %>
               <% end %>
             </td>
           </tr>

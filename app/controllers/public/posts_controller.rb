@@ -1,16 +1,17 @@
 class Public::PostsController < ApplicationController
   def new
     @post = Post.new
+    @post.post_images.build
   end
 
-  def confirm
-    @post = Post.new(post_params)
-  end
+  # def confirm
+  #   @post = Post.new(post_params)
+  # end
 
-  def back
-    @post = Post.new(post_params)
-    render :new
-  end
+  # def back
+  #   @post = Post.new(post_params)
+  #   render :new
+  # end
 
   def create
     @post = Post.new(post_params)
@@ -44,6 +45,7 @@ class Public::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:action, :post_image, :time_required, :budget)
+    # 複数画像アップ時、PostImageへは配列でデータを渡すこと
+    params.require(:post).permit(:action, :time_required, :budget, post_images_images: [])
   end
 end

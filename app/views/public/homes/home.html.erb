@@ -78,7 +78,14 @@
                       </span>
                     </div>
                     <div class="col-4 border">
-                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
+                      <%= link_to post_path(post.id) do %>
+                        <% if post.post_images.blank? %>
+                        <% else %>
+                          <% post.post_images.each do |image| %>
+                            <%= attachment_image_tag image, :image, :fill, 100, 100, class:"col-12 rounded float-center" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
                     </div>
                   </div>
                 <% end %>
@@ -122,8 +129,15 @@
                         <% end %>
                       </span>
                     </div>
-                    <div class="col-4 border justify-content-center">
-                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
+                    <div class="col-4 border">
+                      <%= link_to post_path(post.id) do %>
+                        <% if post.post_images.blank? %>
+                        <% else %>
+                          <% post.post_images.each do |image| %>
+                            <%= attachment_image_tag image, :image, :fill, 100, 100, class:"col-12 rounded float-center" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
                     </div>
                   </div>
                 <% end %>
@@ -174,7 +188,14 @@
                       <% end %>
                     </div>
                     <div class="col-4 border">
-                      <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
+                      <%= link_to post_path(post.id) do %>
+                        <% if post.post_images.blank? %>
+                        <% else %>
+                          <% post.post_images.each do |image| %>
+                            <%= attachment_image_tag image, :image, :fill, 100, 100, class:"col-12 rounded float-center" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
                     </div>
                   </div>
                 <% end %>
