@@ -10,6 +10,8 @@
     <!--<#%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>-->
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
   </head>
 
   <body>
@@ -55,13 +57,10 @@
     <p><%= alert %></p>
     <%= yield %>
 
-    <!--画面表示最下部表示：画面下が切れるため不採用-->
-    <!--<footer class="fixed-bottom bg-light text-center py-3 mt-3">-->
-    <!--  <span>footer</span>-->
-    <!--</footer>-->
     <footer class="bg-light text-center py-3 mt-3">
       <span>footer</span>
     </footer>
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </body>
 </html>

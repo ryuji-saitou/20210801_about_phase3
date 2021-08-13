@@ -4,27 +4,29 @@
       <h3>Post detail</h3>
       <div class="border p-3">
         <h5><strong>投稿内容</strong></h5>
-        <table class="table table-borderless">
-          <tr>
-            <td class="col-4">イメージ画像</td>
-            <td class="col-8 text-center">
-              <% if @post.post_images.blank? %>
-                <span>-</span>
-              <% else %>
-                <% if @post.post_images.present? %>
+        <div class="row">
+          <div class="col-4">イメージ画像</div>
+          <div class="col-8 text-center">
+            <% if @post.post_images.blank? %>
+              <span>-</span>
+            <% else %>
+              <% if @post.post_images.present? %>
+                <div id="slider">
                   <% @post.post_images.each do |image| %>
                     <%= attachment_image_tag image, :image, :fill, 300, 300 %>
                   <% end %>
-                <% end %>
+                </div>
               <% end %>
-            </td>
-          </tr>
+            <% end %>
+          </div>
+        </div>
+        <table class="table table-borderless">
           <tr>
-            <td>
+            <td class="col-4">
               投稿ユーザー<br>
               <span class="small text-secondary">(ユーザーID)</span>
             </td>
-            <td>
+            <td class="col-8">
               <%= @post.user.user_name %><br>
               <span class="small text-secondary">(<%= @post.user.user_name_id %>)</span>
             </td>
@@ -70,7 +72,6 @@
             </tr>
           </tr>
         </table>
-      </div>
       <div class="my-3"></div>
       <div class="border p-3">
         <h5><strong>コメント投稿</strong></h5>

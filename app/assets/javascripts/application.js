@@ -17,7 +17,7 @@
 //= require popper
 //= require bootstrap-sprockets
 
-//= require rails-ujs
+// require rails-ujs [jquery_ujsを使用するため停止]
 //= require activestorage
 //= require turbolinks
 //= require_tree .
@@ -34,3 +34,11 @@ $(window).on('scroll', function() {
   }
 });
 // ▲無限スクロール
+
+// ▼画像スライダー
+$(function() {
+  $('#slider').slick({
+    dots: true, //スライドの下にドットのナビゲーションを表示
+  });
+});
+// ▲画像スライダー
