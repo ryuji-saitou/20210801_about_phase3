@@ -38,6 +38,10 @@
   text-decoration: none;
 }
 
+.search-target .form-control {
+  border: none;
+}
+
 // ▼home:無限スクロールに関する記述
 nav.pagination { // kaminariページ表示オフ
   display: none;

@@ -44,14 +44,14 @@ $(function() {
 // ▲画像スライダー
 
 // ▼search画面検索条件
-	function radio_search_target(){
-		radio = document.getElementsByName('search_target') 
-		if(radio[0].checked) {
-			document.getElementById('hidden1').style.display = "block";
-			document.getElementById('hidden2').style.display = "none";
-		}else if(radio[1].checked) {
-			document.getElementById('hidden1').style.display = "none";
-			document.getElementById('hidden2').style.display = "block";
-		}
+function radio_search_target(){
+	radio = document.getElementsByName('search_target')
+	if(radio[0].checked) {
+		document.getElementById('hidden1').style.display = "block";
+		document.getElementById('hidden2').style.display = "none";
+	}else if(radio[1].checked) {
+		document.getElementById('hidden1').style.display = "none";
+		document.getElementById('hidden2').style.display = "block";
 	}
+}
 // ▲search画面検索条件
