@@ -15,29 +15,52 @@ Rails.application.routes.draw do
 
   # user側ルーティング
   scope module: :public do
+
+    # home
     root "homes#home"
     get "/about", to: "homes#about", as: "about"
+
+    # user
     resources :users, only: [:show, :edit, :update] do
+
+      # follow(relationship)
       resources :relationships, only: [:create, :destroy]
       get "followings", to: "relationships#followings", as: "followings"
       get "followers", to: "relationships#followers", as: "followers"
     end
+
+    # post
     resources :posts, only: [:new, :create, :edit, :update, :show, :destroy] do
       collection do
         post "confirm"
         post "back"
       end
+
+      # post/report
       post "/reports", to: "reports#post_report_create", as: "post_report_create"
       delete "/reports", to: "reports#post_report_destroy", as: "post_report_destroy"
+
+      # comment
       resources :comments, only: [:create, :destroy] do
+
+        # comment/report
         post "/reports", to: "reports#comment_report_create", as: "comment_report_create"
         delete "/reports/", to: "reports#comment_report_destroy", as: "comment_report_destroy"
       end
+
+      # favorite
       resource :favorites, only: [:create, :destroy]
     end
+
+    # ranking
     resources :rankings, only: [:index]
     get "/rankings/result", to: "rankings#result", as: "ranking_result"
-    get "/search", to: "searches#search", as: "search"
+
+    # search
+    get  "/search", to: "searches#search"       , as: "search"
+    post "/search", to: "searches#search_result", as: "search_result"
+
+    # contact
     resources :contacts, only: [:new, :create] do
       collection do
         post "confirm", to: "contacts#confirm", as: "confirm"

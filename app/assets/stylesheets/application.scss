@@ -38,8 +38,14 @@
   text-decoration: none;
 }
 
-// ▼無限スクロールに関する記述
+// ▼home:無限スクロールに関する記述
 nav.pagination { // kaminariページ表示オフ
   display: none;
 }
-// ▲無限スクロールに関する記述
+// ▲home:無限スクロールに関する記述
+
+// ▼search:検索条件に関する記述
+#hidden2 {
+  display: none;
+}
+// ▲search:検索条件に関する記述
