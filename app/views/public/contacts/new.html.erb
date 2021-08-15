@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>Contact</h3>
+      <div class="border p-3">
+        <h5><strong>問い合わせ内容</strong></h5>
+        <!--<#%= form_with model: @post, method: :post, url: confirm_posts_path, local: true do |f| %>-->
+        <%= form_with model: @contact, url: confirm_contacts_path, local: true do |f| %>
+          <table class="table table-borderless">
+            <tr>
+              <td><%= f.label :name, "お名前" %></td>
+              <td><%= f.text_field :name, class:"width-100" %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :email, "メールアドレス" %></td>
+              <td><%= f.email_field :email, class:"col-12" %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :phone_number, "電話番号" %></td>
+              <td><%= f.text_field :phone_number, class:"col-12" %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :subject, "お問い合わせ件名" %></td>
+              <td><%= f.text_field :subject, class:"col-12" %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :contact_message, "お問い合わせ内容" %></td>
+              <td><%= f.text_area :contact_message, rows: 10, class:"col-12" %></td>
+            </tr>
+          </table>
+          <div class="text-center">
+            <%= f.submit "入力内容確認", class:"col-3" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

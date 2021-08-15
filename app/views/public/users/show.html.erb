@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <% if @user == current_user %>
+        <div class="row">
+          <div class="col-11"><h3>My page</h3></div>
+          <div class="col-1">
+            <%= link_to edit_user_path do %>
+              <h3><i class="fas fa-user-edit text-right"></i></h3>
+            <% end %>
+          </div>
+        </div>
+        <div class="border p-3">
+          <table class="table table-borderless">
+            <tr class="border-bottom">
+              <td class="col-4">プロフィール画像</td>
+              <td class="col-8"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
+            </tr>
+            <tr class="border-bottom">
+              <td>ユーザー名 <span class="small text-secondary">(ID)</span></td>
+              <td>
+                <%= @user.user_name %>
+                <span class="small text-secondary"> (<%= @user.user_name_id %>)</span>
+              </td>
+            </tr>
+            <tr class="border-bottom">
+              <td>プロフィール</td>
+              <td><%= @user.profile_introduction %></td>
+            </tr>
+            <tr class="border-bottom">
+              <td>Link</td>
+              <td><%= link_to "#{@user.profile_sns_link}", "#{@user.profile_sns_link}" %></td>
+            </tr>
+            <tr class="border-bottom">
+              <td>フォロー数</td>
+              <td>
+                <%= link_to user_followings_path(@user.id) do %>
+                  <%= @user.followings.count %>
+                <% end %>
+              </td>
+            </tr>
+            <tr class="border-bottom">
+              <td>フォロワー数</td>
+              <td>
+                <%= link_to user_followers_path(@user.id) do %>
+                  <%= @user.followers.count %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="small text-secondary text-right">※<%= @user.created_at %>から利用しています</td>
+            </tr>
+          </table>
+        </div>
+      <% else %>
+        <div>
+          <h3>User page</h3>
+        </div>
+        <div class="py-1"><!--上下余白div--></div>
+        <div class="border p-3">
+          <table class="table">
+            <tr>
+              <td class="col-4">プロフィール画像</td>
+              <td class="col-8"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
+            </tr>
+            <tr>
+              <td>ユーザー名(ID)</td>
+              <td>
+                <%= @user.user_name %>
+                <span class="small text-secondary"> (<%= @user.user_name_id %>)　　 </span>
+                <% if current_user.following?(@user) %>
+                  <%= link_to "フォロー中", user_relationship_path(user_id: @user), method: :delete, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+                <% else %>
+                  <%= link_to "フォローする", user_relationships_path(user_id: @user), method: :post, class:"btn btn-sm btn-secondary text-white text-decoration-none" %>
+                <% end %>
+              </td>
+            </tr>
+            <tr class="border-bottom">
+              <td>プロフィール</td>
+              <td><%= @user.profile_introduction %></td>
+            </tr>
+            <tr class="border-bottom">
+              <td>Link</td>
+              <td><%= link_to "#{@user.profile_sns_link}", "#{@user.profile_sns_link}" %></td>
+            </tr>
+            <tr class="border-bottom">
+              <td>フォロー数</td>
+              <td>
+                <%= link_to user_followings_path(@user.id) do %>
+                  <%= @user.followings.count %>
+                <% end %>
+              </td>
+            </tr>
+            <tr class="border-bottom">
+              <td>フォロワー数</td>
+              <td>
+                <%= link_to user_followers_path(@user.id) do %>
+                  <%= @user.followers.count %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="small text-secondary text-right">※<%= @user.created_at %>から利用しています</td>
+            </tr>
+          </table>
+        </div>
+      <% end %>
+      <div class="py-3"><!--上下余白div--></div>
+      <div class="border p-3">
+        <h5><strong><%= @user.user_name %>の投稿</strong></h5>
+        <span>投稿順に表示</span>
+      </div>
+    </div>
+  </div>
+</div>

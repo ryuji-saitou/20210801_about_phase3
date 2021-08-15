@@ -5,7 +5,7 @@ class CreateReports < ActiveRecord::Migration[5.2]
       t.integer :user_id   , null: false
       t.integer :post_id   , null: false
       t.integer :comment_id
-      t.text    :reason    , null: false
+      t.text    :reason
 
       t.timestamps
     end

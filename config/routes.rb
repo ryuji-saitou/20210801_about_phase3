@@ -15,28 +15,59 @@ Rails.application.routes.draw do
 
   # user側ルーティング
   scope module: :public do
+
+    # home
     root "homes#home"
     get "/about", to: "homes#about", as: "about"
+
+    # user
     resources :users, only: [:show, :edit, :update] do
+
+      # follow(relationship)
       resources :relationships, only: [:create, :destroy]
       get "followings", to: "relationships#followings", as: "followings"
       get "followers", to: "relationships#followers", as: "followers"
     end
-    resources :posts, only: [:new, :create, :show, :destroy] do
+
+    # post
+    resources :posts, only: [:new, :create, :edit, :update, :show, :destroy] do
       collection do
-        get "check"
+        post "confirm"
+        post "back"
       end
+
+      # post/report
       post "/reports", to: "reports#post_report_create", as: "post_report_create"
-      delete "/reports/:id", to: "reports#post_report_destroy", as: "post_report_destroy"
+      delete "/reports", to: "reports#post_report_destroy", as: "post_report_destroy"
+
+      # comment
       resources :comments, only: [:create, :destroy] do
+
+        # comment/report
         post "/reports", to: "reports#comment_report_create", as: "comment_report_create"
-        delete "/reports/:id", to: "reports#comment_report_destroy", as: "comment_report_destroy"
+        delete "/reports/", to: "reports#comment_report_destroy", as: "comment_report_destroy"
       end
-      resources :favorites, only: [:create, :destroy]
+
+      # favorite
+      resource :favorites, only: [:create, :destroy]
     end
-    get "/ranking", to: "rankings#ranking", as: "ranking"
-    post "/ranking", to: "rankings#ranking_search", as: "ranking_search"
-    get "/search", to: "searches#search", as: "search"
+
+    # ranking
+    resources :rankings, only: [:index]
+    get "/rankings/result", to: "rankings#result", as: "ranking_result"
+
+    # search
+    get  "/search", to: "searches#search"       , as: "search"
+    post "/search", to: "searches#search_result", as: "search_result"
+
+    # contact
+    resources :contacts, only: [:new, :create] do
+      collection do
+        post "confirm", to: "contacts#confirm", as: "confirm"
+        post "back", to: "contacts#back", as: "back"
+        get "done", to: "contacts#done", as: "done"
+      end
+    end
   end
 
   # admin側ルーティング
