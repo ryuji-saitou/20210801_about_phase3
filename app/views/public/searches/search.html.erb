@@ -15,23 +15,29 @@
 
           <!--▼post検索条件-->
           <div id="hidden1">
-            <%= form_with url: search_result_path, method: :post, local: true do |f| %>
+            <%= form_with(scope: :search, url: search_result_path, method: :post, local: true)do |f| %>
               <%= f.hidden_field :search_target, value: "post" %>
               <div class="form-group row">
-                <%= f.label :search_keyword, "■キーワード：", class:"col-form-label col-4" %>
-                <%= f.text_field :search_keyword, class:"form-control col-7" %>
+                <%= f.label :action, "■投稿内容：", class:"col-form-label col-4" %>
+                <%= f.text_field :action, value: @search_params[:action], class:"form-control col-6" %>
               </div>
               <div class="form-group row">
-                <%= f.label :search_time_required, "■所要時間：", class:"col-form-label col-4" %>
-                <%= f.number_field :search_time_required, class:"form-control col-7" %>
+                <%= f.label :time_required, "■所要時間：", class:"col-form-label col-4" %>
+                <%= f.number_field :time_required_from, value: @search_params[:time_required_from], class:"form-control col-3" %>
+                <p class="p-1">　〜　</p>
+                <%= f.number_field :time_required_to, value: @search_params[:time_required_to], class:"form-control col-3" %>
               </div>
               <div class="form-group row">
-                <%= f.label :search_budget, "■予算：", class:"col-form-label col-4" %>
-                <%= f.number_field :search_budget, class:"form-control col-7" %>
+                <%= f.label :budget, "■予算：", class:"col-form-label col-4" %>
+                <%= f.number_field :budget_from, value: @search_params[:budget_from], class:"form-control col-3" %>
+                <p class="p-1">　〜　</p>
+                <%= f.number_field :budget_to, value: @search_params[:budget_to], class:"form-control col-3" %>
               </div>
               <div class="form-group row">
-                <%= f.label :search_year_month, "■投稿年月：", class:"col-form-label col-4" %>
-                <%= f.number_field :search_year_month, class:"form-control col-7" %>
+                <%= f.label :created_at, "■投稿年月：", class:"col-form-label col-4" %>
+                <%= f.date_field :created_at_from, value: @search_params[:created_at_from], class:"form-control col-3" %>
+                <p class="p-1">　〜　</p>
+                <%= f.date_field :created_at_to, value: @search_params[:created_at_to], class:"form-control col-3" %>
               </div>
               <div class="action">
                 <%= f.submit "検索", class:"btn btn-sm btn-info" %>
@@ -42,11 +48,11 @@
 
           <!--▼user検索条件-->
           <div id="hidden2">
-            <%= form_with url: search_result_path, method: :post, local: true do |f| %>
+            <%= form_with(scope: :search, url: search_result_path, method: :post, local: true)do |f| %>
               <%= f.hidden_field :search_target, value: "user" %>
               <div class="form-group row">
                 <%= f.label :search_keyword, "■キーワード：", class:"col-form-label col-4" %>
-                <%= f.text_field :search_keyword, class:"form-control col-7" %>
+                <%= f.text_field :search_keyword, value: @search_keyword, class:"form-control col-7" %>
               </div>
               <div class="form-group row">
                 <%= f.label :how_old, "■年齢：", class:"col-form-label col-4" %>
@@ -64,13 +70,58 @@
 
       </div>
       <div class="py-3"><!--上下余白div--></div>
-      <% if @user.blank? %>
-        <p class="text-center">検索条件を選択してください</p>
-      <% else %>
+      <% if @posts.present? %>
         <div class="border p-3">
           <h5><strong>検索結果</strong></h5>
           <p>検索結果ソート項目</p>
-          <p>検索結果表示</p>
+            <div id="tab1" class="tab-pane active scroll-list jscroll">
+              <% @posts.each do |post| %>
+                <%= link_to post_path(post.id) do %>
+                  <div class="row border-bottom py-3">
+                    <div class="col-8">
+                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                      <br>
+                      <%= post.user.user_name %>
+                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                      <br>
+                      <span class="small">予算：<%= post.time_required %>円</span>
+                      <span class="small"> / </span>
+                      <span class="small">所要時間：<%= post.budget %>分</span>
+                      <br>
+                      <span><%= simple_format(h(post.action)) %></span>
+                      <span>
+                        <% if post.favorited_by?(current_user) %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                        <% else %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+                        <% end %>
+                      </span>
+                      <%= link_to post_path(post.id) do %>
+                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+                      <% end %>
+                      <br>
+                      <span>
+                        <% if post.reported_by?(current_user) %>
+                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                        <% else %>
+                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
+                        <% end %>
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <% if post.post_images.present? %>
+                        <div id="slider">
+                          <% post.post_images.each do |image| %>
+                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+              <!--<#%= paginate @posts %>-->
+            </div>
         </div>
       <% end %>
     </div>
