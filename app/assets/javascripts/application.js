@@ -10,35 +10,44 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 
-//= require jquery
+// require jquery
 //= require jquery3
 //= require jquery_ujs
+//  require rails-ujs [jquery_ujsを使用するため停止]
 //= require jquery.jscroll.min.js
 //= require popper
 //= require bootstrap-sprockets
 
-// require rails-ujs [jquery_ujsを使用するため停止]
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 
 // ▼無限スクロール
-$(window).on('scroll', function() {
-  scrollHeight = $(document).height();
-  scrollPosition = $(window).height() + $(window).scrollTop();
-  if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
-    $('.jscroll').jscroll({
-      contentSelector: '.scroll-list',  // 読み込んだ要素を追加するクラス
-      nextSelector: 'span.next:last a'
-    });
-  }
+document.addEventListener("turbolinks:load", function(){
+  $(window).on('scroll', function() {
+    scrollHeight = $(document).height();
+    scrollPosition = $(window).height() + $(window).scrollTop();
+    if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+      // 表示画面がページの下部"0.5%"に位置している場合に下記処理を実行
+      $('.jscroll').jscroll({
+        contentSelector: '.scroll-list',  // .scroll-listに読み込んだ要素を追加
+        nextSelector: 'span.next:last a'
+      });
+      // $('.jscroll2').jscroll({
+      //   contentSelector: '.scroll-list2',  // .scroll-listに読み込んだ要素を追加
+      //   nextSelector: '.pagenate2 span.next:last a'
+      // });
+    }
+  });
 });
 // ▲無限スクロール
 
 // ▼画像スライダー
-$(function() {
-  $('#slider').slick({
-    dots: true, //スライドの下にドットのナビゲーションを表示
+document.addEventListener("turbolinks:load", function(){
+  $(function() {
+    $('.slider').slick({
+      dots: true, //スライドの下にドットのナビゲーションを表示
+    });
   });
 });
 // ▲画像スライダー

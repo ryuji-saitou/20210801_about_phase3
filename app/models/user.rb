@@ -35,5 +35,16 @@ class User < ApplicationRecord
     followings.include?(user)
   end
   # ▲フォロー・フォロワーに関する記述
+  
+  # ▼ユーザー検索機能に関する記述
+  scope :user_search, -> (search_params) do
+    return if search_params.blank?
+    user_name_like(search_params[:user_name])
+  end
+  scope :user_name_like, -> (user_name) { where("user_name LIKE ?", "%#{user_name}%") if user_name.present? }
+  # present? = 値が入っていれば処理する
+  # scope :メソッド名 -> (引数) {SQL文}
+  # ▲投稿検索機能に関する記述
+
 
 end

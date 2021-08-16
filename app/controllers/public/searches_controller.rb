@@ -1,16 +1,25 @@
 class Public::SearchesController < ApplicationController
   def search
-    @search_params = search_params
+    @search_params = post_search_params
   end
 
   def search_result
-    @search_params = search_params
-    @posts = Post.post_search(@search_params)
-    render :search
+    # 検索対象が "post" の場合
+    if params[:search][:search_target] == "post"
+      @search_params = post_search_params
+      @posts = Post.post_search(@search_params)
+      render :search
+    # 検索対象が "user" の場合
+    elsif params[:search][:search_target] == "user"
+      @search_params = user_search_params
+      @users = User.user_search(@search_params)
+      render :search
+    end
   end
+      # @users = User.user_search(birthday: older_birthday..younger_birthday)
 
   private
-  def search_params
+  def post_search_params
     params.fetch(:search, {}).permit(
       :search_target,
       :action,
@@ -20,6 +29,15 @@ class Public::SearchesController < ApplicationController
       :budget_to,
       :created_at_from,
       :created_at_to
+    )
+  end
+
+  def user_search_params
+    params.fetch(:search, {}).permit(
+      :search_target,
+      :user_name,
+      :how_old_min,
+      :how_old_max,
     )
   end
 end

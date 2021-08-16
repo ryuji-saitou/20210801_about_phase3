@@ -37,6 +37,7 @@
           </div>
           <div class="navbar-nav">
             <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link" %>
+            <%= link_to "Notice", root_path, class:"nav-item nav-link" %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link" %>
           </div>
         <% else %>

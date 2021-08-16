@@ -2,50 +2,74 @@
   <div class="row">
     <div class="col-8 mx-auto">
       <h3>Ranking</h3>
-      <div class="border p-3">
-        <h5><strong>ランキング検索条件</strong></h5>
+      <!--<div class="border p-3">-->
+      <!--  <h5><strong>ランキング検索条件</strong></h5>-->
 
         <!--▼ランキング検索条件-->
-        <%= form_with url: ranking_result_path, method: :get, local: true do |f| %>
-          <p>年月指定：<%= f.select 'search[year_month]', options_for_select({ "年月1" => "年月1", "年月2" => "年月2" }) %></p>
-          <p>予算指定最小：<%= f.number_field "search[budget_min]" %></p>
-          <p>予算指定最大：<%= f.number_field "search[budget_max]"  %></p>
-          <p><%= f.submit "検索" %></p>
-        <% end %>
+        <!--<#%= form_with url: ranking_result_path, method: :get, local: true do |f| %>-->
+        <!--  <p>年月指定：<#%= f.select 'search[year_month]', options_for_select({ "年月1" => "年月1", "年月2" => "年月2" }) %></p>-->
+        <!--  <p>予算指定最小：<#%= f.number_field "search[budget_min]" %></p>-->
+        <!--  <p>予算指定最大：<#%= f.number_field "search[budget_max]"  %></p>-->
+        <!--  <p><#%= f.submit "検索" %></p>-->
+        <!--<#% end %>-->
         <!--▲ランキング検索条件-->
 
-      </div>
+
+      <!--</div>-->
       <div class="py-3"><!--上下余白div--></div>
       <div class="border p-3">
         <% if @datas.blank? %>
           <h5><strong>今月の人気投稿 TOP10</strong></h5>
-            <% @all_ranks.each.with_index(1) do |post, i| %>
-              <%= link_to post_path(post.id), class:"text-decoration-none" do %>
-                <div class="row border-bottom py-3">
-                  <div class="col-8">
-                    <p><strong>第<%= i %>位</strong></p>
-                    <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %><br>
-                    <%= post.user.user_name %>
-                    <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span><br>
-                    <span><%= simple_format(h(post.action)) %></span>
-                    <span class="small">予算：<%= post.time_required %>円</span>
-                    <span class="small"> / </span>
-                    <span class="small">所要時間：<%= post.budget %>分</span><br>
-                    <span>
-                      <% if post.favorited_by?(current_user) %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                      <% else %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+          <% @all_ranks.each.with_index(1) do |post, i| %>
+            <%= link_to post_path(post.id), class:"text-decoration-none" do %>
+              <div class="row border-bottom py-3">
+                <div class="col-8">
+                  <p><strong>第<%= i %>位</strong></p>
+
+                  <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                      <br>
+                      <%= post.user.user_name %>
+                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                      <br>
+                      <span class="small">予算：<%= post.time_required %>円</span>
+                      <span class="small"> / </span>
+                      <span class="small">所要時間：<%= post.budget %>分</span>
+                      <br>
+                      <span><%= simple_format(h(post.action)) %></span>
+                      <span>
+                        <% if post.favorited_by?(current_user) %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                        <% else %>
+                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+                        <% end %>
+                      </span>
+                      <%= link_to post_path(post.id) do %>
+                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
                       <% end %>
-                    </span><br>
-                    <span>コメント： <%= post.comments.count %> 件</span>
+                      <br>
+                      <span>
+                        <% if post.reported_by?(current_user) %>
+                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                        <% else %>
+                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
+                        <% end %>
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <% if post.post_images.present? %>
+                        <div id="slider">
+                          <% post.post_images.each do |image| %>
+                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
                   </div>
-                  <div class="col-4">
-                    <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
-                  </div>
-                </div>
+                <% end %>
               <% end %>
-            <% end %>
+
+
+
         <% else %>
           <h5><strong>検索結果</strong></h5>
           <span>検索結果表示</span>

@@ -23,7 +23,7 @@ class Post < ApplicationRecord
   end
   # ▲投稿通報機能に関する記述
 
-  # ▼投稿通報機能に関する記述
+  # ▼投稿検索機能に関する記述
   scope :post_search, -> (search_params) do
     return if search_params.blank?
     action_like(search_params[:action])
@@ -34,15 +34,14 @@ class Post < ApplicationRecord
     .created_at_from(search_params[:created_at_from])
     .created_at_to(search_params[:created_at_to])
   end
-
-    # present? = 値が入っていれば処理する
-    # scope :メソッド名 -> (引数) {SQL文}
   scope :action_like, -> (action) { where("action LIKE ?", "%#{action}%") if action.present? }
   scope :time_required_from, -> (from) { where("? <= time_required", from) if from.present? }
   scope :time_required_to, -> (to) { where("time_required <= ?", to)   if to.present? }
   scope :budget_from, -> (from) { where("? <= budget", from)        if from.present? }
   scope :budget_to, -> (to) { where("budget <= ?", to)          if to.present? }
-  scope :created_at_from, -> (from) { where("? <= created_at", from)    if from.present? }
-  scope :created_at_to, -> (to) { where("created_at <= ?", to)      if to.present? }
-  # ▲投稿通報機能に関する記述
+  scope :created_at_from, -> (from) { where("? <= created_at: search_date.in_time_zone.all_month", from)    if from.present? }
+  scope :created_at_to, -> (to) { where("created_at: search_date.in_time_zone.all_month <= ?", to)      if to.present? }
+  # present? = 値が入っていれば処理する
+  # scope :メソッド名 -> (引数) {SQL文}
+  # ▲投稿検索機能に関する記述
 end
