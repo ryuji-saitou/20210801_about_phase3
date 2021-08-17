@@ -13,4 +13,8 @@ class Comment < ApplicationRecord
   end
   # ▲コメント通報機能に関する記述
 
+  # ▼通知機能に関する記述
+  has_many :notifications, dependent: :destroy
+  # ▲通知機能に関する記述
+
 end

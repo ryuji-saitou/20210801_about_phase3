@@ -23,23 +23,23 @@
 //= require_tree .
 
 // ▼無限スクロール
-document.addEventListener("turbolinks:load", function(){
-  $(window).on('scroll', function() {
-    scrollHeight = $(document).height();
-    scrollPosition = $(window).height() + $(window).scrollTop();
-    if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
-      // 表示画面がページの下部"0.5%"に位置している場合に下記処理を実行
-      $('.jscroll').jscroll({
+// ▼[fix]20210817：tabごとにページ遷移する仕様に変更
+//                 平行して "javascript" の記述を軽量化
+$(document).on('turbolinks:load', function() {
+  $('#tab1_link').click(function() {
+    // console.log('tab1');
+    window.location.href = '/?tab=timeline'
+  })
+  $('#tab2_link').click(function() {
+    // console.log('tab2')
+    window.location.href = '/?tab=new'
+  })
+
+  $('.jscroll').jscroll({
         contentSelector: '.scroll-list',  // .scroll-listに読み込んだ要素を追加
         nextSelector: 'span.next:last a'
-      });
-      // $('.jscroll2').jscroll({
-      //   contentSelector: '.scroll-list2',  // .scroll-listに読み込んだ要素を追加
-      //   nextSelector: '.pagenate2 span.next:last a'
-      // });
-    }
   });
-});
+})
 // ▲無限スクロール
 
 // ▼画像スライダー
@@ -64,3 +64,4 @@ function radio_search_target(){
 	}
 }
 // ▲search画面検索条件
+

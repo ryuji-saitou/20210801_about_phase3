@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       resources :relationships, only: [:create, :destroy]
       get "followings", to: "relationships#followings", as: "followings"
       get "followers", to: "relationships#followers", as: "followers"
+
+      # notification
+      resources :notifications, only: :index
     end
 
     # post
@@ -68,6 +71,7 @@ Rails.application.routes.draw do
         get "done", to: "contacts#done", as: "done"
       end
     end
+
   end
 
   # admin側ルーティング

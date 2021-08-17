@@ -34,8 +34,8 @@
 
           <!--▼タブタイトル-->
           <ul class="nav nav-tabs nav-justified mx-auto">
-            <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">タイムライン</a></li>
-            <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">最新投稿</a></li>
+            <li class="nav-item"><a id="tab1_link" href="#tab1" class="nav-link<%= params[:tab] == 'timeline' || !params[:tab].present? ? ' active' : '' %>" data-toggle="tab">タイムライン</a></li>
+            <li class="nav-item"><a id="tab2_link" href="#tab2" class="nav-link<%= params[:tab] == 'new' ? ' active' : '' %>" data-toggle="tab">最新投稿</a></li>
           </ul>
           <!--▲タブタイトル-->
 
@@ -43,12 +43,8 @@
           <div class="tab-content">
 
             <!--▼タイムライン投稿表示-->
-            <div id="tab1" class="tab-pane active scroll-list jscroll">
-              <% if @follow_posts.blank? %>
-                <div class="row border-bottom py-3">
-                  <span class="col-12 text-center">フォローしているユーザーがいません</span>
-                </div>
-              <% else %>
+            <div id="tab1" class="tab-pane scroll-list <%= params[:tab] == 'timeline' || !params[:tab].present? ? ' active' : '' %>">
+              <% if @follow_posts.present? %>
                 <% @follow_posts.each do |post| %>
                   <%= link_to post_path(post.id) do %>
                     <div class="row border-bottom py-3">
@@ -84,7 +80,7 @@
                       </div>
                       <div class="col-4">
                         <% if post.post_images.present? %>
-                          <div class="slider-tab1">
+                          <div class="slider">
                             <% post.post_images.each do |image| %>
                               <%= attachment_image_tag image, :image, :fill, 300, 300 %>
                             <% end %>
@@ -94,59 +90,70 @@
                     </div>
                   <% end %>
                 <% end %>
+                <div class="jscroll">
+                  <%= paginate @follow_posts %>
+                </div>
+              <% else %>
+                <div class="row border-bottom py-3">
+                  <span class="col-12 text-center">フォローしているユーザーがいません</span>
+                </div>
               <% end %>
-              <%= paginate @follow_posts %>
             </div>
             <!--▲タイムライン投稿表示-->
 
             <!--▼最新投稿表示-->
-            <div id="tab2" class="tab-pane scroll-list jscroll">
-              <% @all_posts.each do |post| %>
-                <%= link_to post_path(post.id) do %>
-                  <div class="row border-bottom py-3">
-                    <div class="col-8">
-                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                      <br>
-                      <%= post.user.user_name %>
-                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                      <br>
-                      <span class="small">予算：<%= post.time_required %>円</span>
-                      <span class="small"> / </span>
-                      <span class="small">所要時間：<%= post.budget %>分</span>
-                      <br>
-                      <span><%= simple_format(h(post.action)) %></span>
-                      <span>
-                        <% if post.favorited_by?(current_user) %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                        <% else %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                        <% end %>
-                      </span>
-                      <%= link_to post_path(post.id) do %>
-                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
-                      <% end %>
-                      <br>
-                      <span>
-                        <% if post.reported_by?(current_user) %>
-                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
-                        <% else %>
-                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
-                        <% end %>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <% if post.post_images.present? %>
-                        <div class="slider-tab2">
-                          <% post.post_images.each do |image| %>
-                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+            <div id="tab2" class="tab-pane scroll-list <%= params[:tab] == 'new' ? ' active' : '' %>">
+              <% if @all_posts.present? %>
+                <% @all_posts.each do |post| %>
+                  <%= link_to post_path(post.id) do %>
+                    <div class="row border-bottom py-3">
+                      <div class="col-8">
+                        <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                        <br>
+                        <%= post.user.user_name %>
+                        <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                        <br>
+                        <span class="small">予算：<%= post.time_required %>円</span>
+                        <span class="small"> / </span>
+                        <span class="small">所要時間：<%= post.budget %>分</span>
+                        <br>
+                        <span><%= simple_format(h(post.action)) %></span>
+                        <span>
+                          <% if post.favorited_by?(current_user) %>
+                            <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                          <% else %>
+                            <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
                           <% end %>
-                        </div>
-                      <% end %>
+                        </span>
+                        <%= link_to post_path(post.id) do %>
+                          <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+                        <% end %>
+                        <br>
+                        <span>
+                          <% if post.reported_by?(current_user) %>
+                            <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                          <% else %>
+                            <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
+                          <% end %>
+                        </span>
+                      </div>
+                      <div class="col-4">
+                        <% if post.post_images.present? %>
+                          <div class="slider">
+                            <% post.post_images.each do |image| %>
+                              <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
+
+                <div class="jscroll">
+                  <%= paginate @all_posts %>
+                </div>
               <% end %>
-              <%= paginate @all_posts %>
             </div>
             <!--▲最新投稿表示-->
 
@@ -193,7 +200,7 @@
                     </div>
                     <div class="col-4">
                       <% if post.post_images.present? %>
-                        <div class="slider-tab2">
+                        <div class="slider">
                           <% post.post_images.each do |image| %>
                             <%= attachment_image_tag image, :image, :fill, 300, 300 %>
                           <% end %>
