@@ -39,9 +39,13 @@
 }
 
 // ▼home:無限スクロールに関する記述
-nav.pagination { // kaminariページ表示オフ
+nav.pagination {          // ◀︎kaminariのページ表示をオフにしています
   display: none;
 }
+
+#tab2 .user-unfollowing { //◀"最新情報"タブ側をスクロールした際に
+  display: none;          // 「フォローしているユーザーはありません」が
+}                         // 表示されないようにしています。
 // ▲home:無限スクロールに関する記述
 
 // ▼search:検索条件に関する記述
