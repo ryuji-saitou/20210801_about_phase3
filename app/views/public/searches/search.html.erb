@@ -34,12 +34,12 @@
                 <%= f.number_field :budget_to, value: @search_params[:budget_to], class:"form-control col-3" %>
               </div>
               <!--検索：投稿年月での絞り込み-->
-              <!--<div class="form-group row">-->
-              <!--  <#%= f.label :created_at, "■投稿年月：", class:"col-form-label col-4" %>-->
-              <!--  <#%= f.date_field :created_at_from, value: @search_params[:created_at_from], class:"form-control col-3" %>-->
-              <!--  <p class="p-1">　〜　</p>-->
-              <!--  <#%= f.date_field :created_at_to, value: @search_params[:created_at_to], class:"form-control col-3" %>-->
-              <!--</div>-->
+              <div class="form-group row">
+                <%= f.label :created_at, "■投稿年月：", class:"col-form-label col-4" %>
+                <%= f.date_field :created_at_from, value: @search_params[:created_at_from], class:"form-control col-3" %>
+                <p class="p-1">　〜　</p>
+                <%= f.date_field :created_at_to, value: @search_params[:created_at_to], class:"form-control col-3" %>
+              </div>
               <div class="action">
                 <%= f.submit "検索", class:"btn btn-sm btn-info" %>
               </div>
@@ -73,104 +73,92 @@
 
       </div>
       <div class="py-3"><!--上下余白div--></div>
-      <% if @posts.present? %>
-        <div class="border p-3">
-          <h5><strong>検索結果</strong></h5>
-          <p>検索結果ソート項目</p>
-            <div id="tab1" class="tab-pane active scroll-list jscroll">
-              <% @posts.each do |post| %>
-                <%= link_to post_path(post.id) do %>
-                  <div class="row border-bottom py-3">
-                    <div class="col-8">
-                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                      <br>
-                      <%= post.user.user_name %>
-                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                      <br>
-                      <span class="small">予算：<%= post.time_required %>円</span>
-                      <span class="small"> / </span>
-                      <span class="small">所要時間：<%= post.budget %>分</span>
-                      <br>
-                      <span><%= simple_format(h(post.action)) %></span>
-                      <span>
-                        <% if post.favorited_by?(current_user) %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                        <% else %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                        <% end %>
-                      </span>
-                      <%= link_to post_path(post.id) do %>
-                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+      <div class="border p-3">
+        <h5><strong>検索結果</strong></h5>
+        <p>検索結果ソート項目</p>
+        <div>
+          <% if @posts.present? %>
+            <% @posts.each do |post| %>
+              <%= link_to post_path(post.id) do %>
+                <div class="row border-bottom py-3">
+                  <div class="col-8">
+                    <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                    <br>
+                    <%= post.user.user_name %>
+                    <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                    <br>
+                    <span class="small">予算：<%= post.time_required %>円</span>
+                    <span class="small"> / </span>
+                    <span class="small">所要時間：<%= post.budget %>分</span>
+                    <br>
+                    <span><%= simple_format(h(post.action)) %></span>
+                    <span>
+                      <% if post.favorited_by?(current_user) %>
+                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                      <% else %>
+                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
                       <% end %>
-                      <br>
-                      <span>
-                        <% if post.reported_by?(current_user) %>
-                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
-                        <% else %>
-                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
-                        <% end %>
+                    </span>
+                    <%= link_to post_path(post.id) do %>
+                      <span class="btn btn-sm btn-secondary text-white">
+                        <i class="fas fa-comments"></i> <%= post.comments.count %>
                       </span>
-                    </div>
-                    <div class="col-4">
-                      <% if post.post_images.present? %>
-                        <div class="slider">
-                          <% post.post_images.each do |image| %>
-                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
-                          <% end %>
-                        </div>
+                    <% end %>
+                    <br>
+                    <span>
+                      <% if post.reported_by?(current_user) %>
+                        <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                      <% else %>
+                        <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
                       <% end %>
-                    </div>
+                    </span>
                   </div>
-                <% end %>
+                  <div class="col-4">
+                    <% if post.post_images.present? %>
+                      <div class="slider">
+                        <% post.post_images.each do |image| %>
+                          <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
-              <!--<#%= paginate @posts %>-->
-            </div>
-        </div>
-      <% elsif @users.present? %>
-        <div class="border p-3">
-          <h5><strong>検索結果</strong></h5>
-
-
-
-          <p>検索結果ソート項目dayo</p>
-            <tr>
-              <th scope="col">ID
-                <%= sort_asc('id', @search_params) %>
-                <%= sort_desc('id', @search_params) %>
-              </th>
-              <th scope="col">ユーザー名
-                <%= sort_asc('user_name', @search_params) %>
-                <%= sort_desc('user_name', @search_params) %>
-              </th>
-              <th scope="col">ユーザーID
-                <%= sort_asc('user_name_id', @search_params) %>
-                <%= sort_desc('user_name_id', @search_params) %>
-              </th>
-              <th scope="col">年齢
-                <%= sort_asc('publication_year', @search_params) %>
-                <%= sort_desc('publication_year', @search_params) %>
-              </th>
-            </tr>
-
-
-
+            <% end %>
+          <% elsif @users.present? %>
             <div id="tab1" class="tab-pane active scroll-list jscroll">
+
+
+<th scope="col">ID
+  <%= sort_asc('id', @search_params) %>
+  <%= sort_desc('id', @search_params) %>
+</th>
+<th scope="col">ユーザーID
+  <%= sort_asc('user_name_id', @search_params) %>
+  <%= sort_desc('user_name_id', @search_params) %>
+</th>
+
+
               <% @users.each do |user| %>
                 <%= link_to user_path(user.id), class:"text-decoration-none" do %>
                   <div class="row border-bottom py-3">
-                    <div class="col-3 text-right"><%= attachment_image_tag user, :profile_image, fallback: "user/no_image.jpg", size:'80x80' %></div>
-                    <div class="col-8 text-left">
+                    <div class="col-auto text-right">
+                      <%= attachment_image_tag user, :profile_image, fallback: "user/no_image.jpg", size:'80x80' %>
+                    </div>
+                    <div class="col-auto text-left">
                       ユーザーネーム(ID)<br>
                       <%= user.user_name %><br>
-                      <span class="small text-secondary">(<%= user.user_name_id %>)</span>
+                      <span class="small text-secondary">
+                        (<%= user.user_name_id %>)
+                      </span>
                     </div>
                   </div>
                 <% end %>
               <% end %>
-              <!--<#%= paginate @posts %>-->
             </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
