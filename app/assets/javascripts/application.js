@@ -10,35 +10,44 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 
-//= require jquery
+// require jquery
 //= require jquery3
 //= require jquery_ujs
+//  require rails-ujs [jquery_ujsを使用するため停止]
 //= require jquery.jscroll.min.js
 //= require popper
 //= require bootstrap-sprockets
 
-// require rails-ujs [jquery_ujsを使用するため停止]
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 
 // ▼無限スクロール
-$(window).on('scroll', function() {
-  scrollHeight = $(document).height();
-  scrollPosition = $(window).height() + $(window).scrollTop();
-  if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
-    $('.jscroll').jscroll({
-      contentSelector: '.scroll-list',  // 読み込んだ要素を追加するクラス
-      nextSelector: 'span.next:last a'
-    });
-  }
-});
+// ▼[fix]20210817：tabごとにページ遷移する仕様に変更
+//                 平行して "javascript" の記述を軽量化
+$(document).on('turbolinks:load', function() {
+  $('#tab1_link').click(function() {
+    // console.log('tab1');
+    window.location.href = '/?tab=timeline'
+  })
+  $('#tab2_link').click(function() {
+    // console.log('tab2')
+    window.location.href = '/?tab=new'
+  })
+
+  $('.jscroll').jscroll({
+        contentSelector: '.scroll-list',  // .scroll-listに読み込んだ要素を追加
+        nextSelector: 'span.next:last a'
+  });
+})
 // ▲無限スクロール
 
 // ▼画像スライダー
-$(function() {
-  $('#slider').slick({
-    dots: true, //スライドの下にドットのナビゲーションを表示
+document.addEventListener("turbolinks:load", function(){
+  $(function() {
+    $('.slider').slick({
+      dots: true, //スライドの下にドットのナビゲーションを表示
+    });
   });
 });
 // ▲画像スライダー
@@ -55,3 +64,4 @@ function radio_search_target(){
 	}
 }
 // ▲search画面検索条件
+

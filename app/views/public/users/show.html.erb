@@ -67,7 +67,7 @@
               <td>ユーザー名(ID)</td>
               <td>
                 <%= @user.user_name %>
-                <span class="small text-secondary"> (<%= @user.user_name_id %>)　　 </span>
+                <span class="small text-secondary"> (<%= @user.user_name_id %>)　　</span>
                 <% if current_user.following?(@user) %>
                   <%= link_to "フォロー中", user_relationship_path(user_id: @user), method: :delete, class:"btn btn-sm btn-info text-white text-decoration-none" %>
                 <% else %>

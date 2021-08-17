@@ -1,0 +1,39 @@
+<% notifications.each do |notification| %>
+  <div class="row mb-3">
+    <div class="col-1">
+      <%= link_to user_path(notification.visitor.id) do %>
+        <%= attachment_image_tag notification.visitor, :profile_image, :fill, 50, 50, fallback: "user/no_image.jpg", size:'50x50' %>
+      <% end %>
+    </div>
+    <div class="col-11 text-left">
+      <%= link_to user_path(notification.visitor.id) do %>
+        <strong class="ml-3"><%= notification.visitor.user_name %></strong>
+      <% end %>
+      <span>さんが</span>
+      <% case notification.action %>
+      <% when 'follow' then %>
+        <%= "あなたをフォローしました" %>
+      <% when 'favorite' then %>
+        <%= link_to 'あなたの投稿', post_path(notification.post) %>
+        <span>にいいねしました</span>
+      <% when 'comment' then %>
+        <% if notification.post.user_id == notification.visited.id %>
+          <%= link_to "あなたの投稿", post_path(notification.post) %>
+        <% else %>
+          <%= link_to post_path(notification.post) do %>
+            <%= attachment_image_tag notification.post.user, :profile_image, :fill, 25, 25, fallback: "user/no_image.jpg", size:'50x50' %>
+            <%= notification.post.user.user_name + 'さんの投稿' %>
+          <% end %>
+        <% end %>
+        <%= "にコメントしました" %>
+        <p class="ml-3 small">
+          <%= Comment.find_by(id: notification.comment_id ).comment %>
+          <span class="text-muted">
+            (<%= time_ago_in_words(notification.created_at).upcase %>)
+          </span>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
