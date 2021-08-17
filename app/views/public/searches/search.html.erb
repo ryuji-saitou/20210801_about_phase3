@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-4">
                       <% if post.post_images.present? %>
-                        <div id="slider">
+                        <div class="slider">
                           <% post.post_images.each do |image| %>
                             <%= attachment_image_tag image, :image, :fill, 300, 300 %>
                           <% end %>
@@ -129,7 +129,31 @@
       <% elsif @users.present? %>
         <div class="border p-3">
           <h5><strong>検索結果</strong></h5>
-          <p>検索結果ソート項目</p>
+
+
+
+          <p>検索結果ソート項目dayo</p>
+            <tr>
+              <th scope="col">ID
+                <%= sort_asc('id', @search_params) %>
+                <%= sort_desc('id', @search_params) %>
+              </th>
+              <th scope="col">ユーザー名
+                <%= sort_asc('user_name', @search_params) %>
+                <%= sort_desc('user_name', @search_params) %>
+              </th>
+              <th scope="col">ユーザーID
+                <%= sort_asc('user_name_id', @search_params) %>
+                <%= sort_desc('user_name_id', @search_params) %>
+              </th>
+              <th scope="col">年齢
+                <%= sort_asc('publication_year', @search_params) %>
+                <%= sort_desc('publication_year', @search_params) %>
+              </th>
+            </tr>
+
+
+
             <div id="tab1" class="tab-pane active scroll-list jscroll">
               <% @users.each do |user| %>
                 <%= link_to user_path(user.id), class:"text-decoration-none" do %>

@@ -16,7 +16,17 @@ class Public::SearchesController < ApplicationController
       render :search
     end
   end
-      # @users = User.user_search(birthday: older_birthday..younger_birthday)
+  # @users = User.user_search(birthday: older_birthday..younger_birthday)
+
+  # include public::SearchesHelper
+  # def search_index
+  #   # ▼ソート関連の記述
+  #   sort_column    = params[:column].presence || 'id'
+  #   @users         = User.joins(:user_name).search(search_params)
+  #                           .order(sort_column + ' ' + sort_direction)
+  #                           .paginate(page: params[:page], per_page: 10)
+  #   @search_params = search_params
+  # end
 
   private
   def post_search_params
