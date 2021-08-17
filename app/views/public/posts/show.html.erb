@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>Post detail</h3>
+      <div class="border p-3">
+        <h5><strong>投稿内容</strong></h5>
+        <div class="row">
+          <div class="col-4">イメージ画像</div>
+          <div class="col-8 text-center">
+            <% if @post.post_images.blank? %>
+              <span>-</span>
+            <% else %>
+              <% if @post.post_images.present? %>
+                <div id="slider">
+                  <% @post.post_images.each do |image| %>
+                    <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <table class="table table-borderless">
+          <tr>
+            <td class="col-4">
+              投稿ユーザー<br>
+              <span class="small text-secondary">(ユーザーID)</span>
+            </td>
+            <td class="col-8">
+              <%= @post.user.user_name %><br>
+              <span class="small text-secondary">(<%= @post.user.user_name_id %>)</span>
+            </td>
+          </tr>
+          <tr>
+            <td>投稿内容</td>
+            <td><%= simple_format(h(@post.action)) %></td>
+          </tr>
+          <tr>
+            <td>所要時間</td>
+            <td><%= @post.time_required %>分</td>
+          </tr>
+          <tr>
+            <td>予算</td>
+            <td><%= @post.budget %>円</td>
+          </tr>
+          <tr>
+            <td>いいね</td>
+            <td>
+              <% if @post.favorited_by?(current_user) %>
+                <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :delete, class:"btn btn-sm btn-danger text-white text-decoration-none" %>
+              <% else %>
+                <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+              <% end %>
+            </td>
+            <tr>
+              <td colspan="2">
+                <% if @post.user == current_user %>
+                  <%= link_to edit_post_path(@post), class:"text-decoration-none" do %>
+                    <strong><i class="fas fa-edit h3"></i></strong>
+                  <% end %>
+                  <span>　</span>
+                  <%= link_to post_path(@post), method: :delete, class:"text-decoration-none", data: {confirm: "投稿を削除しますか？"} do %>
+                    <strong><i class="fas fa-trash-alt text-danger h3"></i></strong>
+                  <% end %>
+                <% end %>
+                <% if @post.reported_by?(current_user) %>
+                  <span>　</span><%= link_to "通報取消", post_post_report_destroy_path(post_id: @post), method: :delete, class:"text-secondary small text-right" %>
+                <% else %>
+                  <span>　</span><%= link_to "通報", post_post_report_create_path(post_id: @post.id), method: :post, class:"text-secondary small text-right" %>
+                <% end %>
+              </td>
+            </tr>
+          </tr>
+        </table>
+      <div class="my-3"></div>
+      <div class="border p-3">
+        <h5><strong>コメント投稿</strong></h5>
+        <div class="row">
+          <div class="col-12 text-right">
+            <%= form_with model:[@post, @comment], local: true do |f| %>
+              <%= f.text_area :comment, class:"col-12", placeholder: "コメント入力" %><br>
+              <%= f.submit "コメント投稿" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-11 mx-auto my-3 border"></div>
+        <h5><strong>コメント一覧</strong></h5>
+        <% if @post.comments.blank? %>
+          <div class="col-auto text-center">
+            <span>まだコメントはありません</span>
+          </div>
+        <% else %>
+          <div class="post_comments">
+            <% @post.comments.each do |comment| %>
+              <%= link_to user_path(comment.user.id) do %>
+                <div class="row border-bottom py-3">
+                  <div class="col-auto">
+                    <%= attachment_image_tag comment.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+                  </div>
+                  <div class="col-auto">
+                    <%= comment.user.user_name %>
+                    <span class="small text-secondary">　(<%= comment.user.user_name_id %>)</span><br>
+                    <span><%= simple_format(h(comment.comment)) %></span>
+                    <% if comment.user == current_user %>
+                      <%= link_to post_comment_path(comment.post, comment), method: :delete, data: {confirm: "コメントを削除しますか？"} do %>
+                        <span class="text-right"><i class="fas fa-trash-alt text-danger"></i></span>
+                      <% end %>
+                    <% end %>
+                    <% if comment.reported_by?(current_user, @post) %>
+                      <span>　</span>
+                      <%= link_to "通報取消", post_comment_comment_report_destroy_path(post_id: @post, comment_id: comment.id), method: :delete, class:"text-secondary small text-right" %>
+                    <% else %>
+                      <span>　</span>
+                      <%= link_to "通報", post_comment_comment_report_create_path(post_id: @post.id, comment_id: comment.id), method: :post, class:"text-secondary small text-right" %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

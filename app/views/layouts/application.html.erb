@@ -5,8 +5,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!--JavaScriptエラーが生じるため "turbolink" 無効化-->
+    <!--<#%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>-->
+    <!--<#%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>-->
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
   </head>
 
   <body>
@@ -26,9 +31,9 @@
           <div class="navbar-nav mr-auto">
             <%= link_to "Home", root_path, class:"nav-item nav-link" %>
             <%= link_to "About", about_path, class:"nav-item nav-link" %>
-            <%= link_to "Ranking", ranking_path, class:"nav-item nav-link" %>
-            <%= link_to "New post", ranking_path, class:"nav-item nav-link" %>
-            <%= link_to "Search", root_path, class:"nav-item nav-link" %>
+            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link" %>
+            <%= link_to "New post", new_post_path, class:"nav-item nav-link" %>
+            <%= link_to "Search", search_path, class:"nav-item nav-link" %>
           </div>
           <div class="navbar-nav">
             <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link" %>
@@ -38,7 +43,7 @@
           <div class="navbar-nav mr-auto">
             <%= link_to "Home", root_path, class:"nav-item nav-link" %>
             <%= link_to "About", about_path, class:"nav-item nav-link" %>
-            <%= link_to "Ranking", ranking_path, class:"nav-item nav-link" %>
+            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link" %>
           </div>
           <div class="navbar-nav">
             <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link" %>
@@ -52,9 +57,10 @@
     <p><%= alert %></p>
     <%= yield %>
 
-    <footer class="fixed-bottom bg-light text-center py-3 mt-3">
+    <footer class="bg-light text-center py-3 mt-3">
       <span>footer</span>
     </footer>
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </body>
 </html>

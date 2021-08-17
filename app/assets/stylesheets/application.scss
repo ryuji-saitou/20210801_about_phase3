@@ -23,3 +23,29 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.tab-content a {
+  color: black;
+  text-decoration: none;
+}
+
+.post_comments a {
+  color: black;
+  text-decoration: none;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+// ▼home:無限スクロールに関する記述
+nav.pagination { // kaminariページ表示オフ
+  display: none;
+}
+// ▲home:無限スクロールに関する記述
+
+// ▼search:検索条件に関する記述
+#hidden2 {
+  display: none;
+}
+// ▲search:検索条件に関する記述

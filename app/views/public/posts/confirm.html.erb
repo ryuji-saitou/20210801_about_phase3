@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>Post confirm</h3>
+      <div class="border p-3">
+        <h5 class="text-center"><strong>以下の内容で投稿します。</strong></h5>
+        <h5 class="text-center"><strong>よろしければ "投稿する" を押してください。</strong></h5>
+        <table class="table table-borderless">
+          <tr>
+            <td>私の贅沢な時間の使い方</td>
+            <td><%=safe_join(@post.action.split("\n"),tag(:br))%></td>
+          </tr>
+          <tr>
+            <td>イメージ画像</td>
+            <% if @post.post_image.blank? %>
+              <td>画像無し</td>
+            <% else %>
+              <td><%= attachment_image_tag @post, :post_image, :fill, 100, 100 %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td>所要時間</td>
+            <td><%= @post.time_required %> 分</td>
+          </tr>
+          <tr>
+            <td>予算目安</td>
+            <td><%= @post.budget %> 円</td>
+          </tr>
+        </table>
+        <div class="text-center">
+          <%= form_with model: @post, method: :post, url: back_contacts_path, local: true do |f| %>
+            <%= f.hidden_field :action %>
+            <%= f.hidden_field :post_image_cache %>
+            <%= f.hidden_field :time_required %>
+            <%= f.hidden_field :budget %>
+            <%= f.submit "編集する", class:"col-3 mx-3" %>
+          <% end %>
+          <div class="py-1"><!--上下余白div--></div>
+          <%= form_with model: @post, method: :post, url: contacts_path, method: :delete, local: true do |f| %>
+            <%= f.hidden_field :action %>
+            <%= f.hidden_field :post_image_cache %>
+            <%= f.hidden_field :time_required %>
+            <%= f.hidden_field :budget %>
+            <%= f.submit "投稿する", class:"col-3 mx-3" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
