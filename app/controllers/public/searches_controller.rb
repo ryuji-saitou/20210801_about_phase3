@@ -1,14 +1,17 @@
 class Public::SearchesController < ApplicationController
-  def search
-    # @search_params = user_search_params
+  # へルパーメソッドの呼び出し
+  include Public::SearchesHelper
 
-    # 検索対象が "post" の場合
+  def search
+    # 検索対象が "post" の場合の処理
     if params[:search_target] == "post" || !params[:search_target].present?
       @search_params = post_search_params
+      # @postに対して、params[:search_target].present? 存在する場合...
+      # true  = Post.post_search(@search_params)を入れる
+      # false = 何も入れない
       @posts = params[:search_target].present? ? Post.post_search(@search_params) : []
       render :search
-    # 検索対象が "user" の場合
-
+    # 検索対象が "user" の場合の処理
     elsif params[:search_target] == "user"
       sort_column    = params[:column].presence || 'id'
       @search_params = user_search_params
@@ -18,32 +21,13 @@ class Public::SearchesController < ApplicationController
     end
   end
 
-  # def search_result
-  #   # 検索対象が "post" の場合
-  #   if params[:search][:search_target] == "post"
-  #     @search_params = post_search_params
-  #     @posts = Post.post_search(@search_params)
-  #     render :search
-  #   # 検索対象が "user" の場合
-  #   elsif params[:search][:search_target] == "user"
-  #     @search_params = user_search_params
-  #     @users = User.user_search(@search_params)
-  #     render :search
-  #   end
-  # end
-
-# ===検索結果ソート=================================
-
-  include Public::SearchesHelper
-
   def search_result
-    # 検索対象が "post" の場合
+    # 検索対象が "post" の場合の処理
     if params[:search][:search_target] == "post"
       @search_params = post_search_params
       @posts = Post.post_search(@search_params)
       render :search
-    # 検索対象が "user" の場合
-
+    # 検索対象が "user" の場合の処理
     elsif params[:search][:search_target] == "user"
       sort_column    = params[:column].presence || 'id'
       @search_params = user_search_params
@@ -52,21 +36,6 @@ class Public::SearchesController < ApplicationController
       render :search
     end
   end
-
-  def search_params
-    params.permit(:title, :author, :publication_year_from, :publication_year_to)
-  end
-
-# ===検索結果ソート=================================
-
-
-
-
-
-
-
-
-
 
   private
   def post_search_params
