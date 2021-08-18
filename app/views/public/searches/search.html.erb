@@ -79,7 +79,6 @@
             <h5><strong>検索結果</strong></h5>
             <div class="row border rounded mx-auto bg-light">
               <div class="col-12 small text-center m-0">
-                <span class="mx-1">ソート項目：</span>
           <!--  <span class="mx-1">-->
           <!--    ID-->
           <!--    <#%= sort_asc('id', @search_params) %>-->
@@ -88,53 +87,7 @@
           <!--  <span class="mx-1"> / </span>-->
               </div>
             </div>
-            <% @posts.each do |post| %>
-              <%= link_to post_path(post.id) do %>
-                <div class="row border-bottom py-3">
-                  <div class="col-8">
-                    <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                    <br>
-                    <%= post.user.user_name %>
-                    <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                    <br>
-                    <span class="small">予算：<%= post.time_required %>円</span>
-                    <span class="small"> / </span>
-                    <span class="small">所要時間：<%= post.budget %>分</span>
-                    <br>
-                    <span><%= simple_format(h(post.action)) %></span>
-                    <span>
-                      <% if post.favorited_by?(current_user) %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                      <% else %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                      <% end %>
-                    </span>
-                    <%= link_to post_path(post.id) do %>
-                      <span class="btn btn-sm btn-secondary text-white">
-                        <i class="fas fa-comments"></i> <%= post.comments.count %>
-                      </span>
-                    <% end %>
-                    <br>
-                    <span>
-                      <% if post.reported_by?(current_user) %>
-                        <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
-                      <% else %>
-                        <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
-                      <% end %>
-                    </span>
-                  </div>
-                  <div class="col-4">
-                    <% if post.post_images.present? %>
-                      <div class="slider">
-                        <% post.post_images.each do |image| %>
-                          <%= attachment_image_tag image, :image, :fill, 300, 300 %>
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
+            <%= render partial: "public/posts/post_detail", collection: @posts, as: "post" %>
           <% elsif @users.present? %>
             <h5><strong>検索結果</strong></h5>
             <div class="row border rounded mx-auto bg-light">

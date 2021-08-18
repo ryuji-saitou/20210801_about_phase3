@@ -4,22 +4,14 @@
       <h3>フォロワー</h3>
       <div class="py-1"><!--上下余白div--></div>
       <div class="border p-3">
-        <% @users.each do |user| %>
-          <%= link_to user_path(user.id) do %>
-            <div class="row border-bottom py-3">
-                <div class="col-auto">
-                  <%= attachment_image_tag user, :profile_image, :fill, 50, 50, fallback: "user/no_image.jpg", size:'50x50' %></td>
-                </div>
-                <div class="col-auto">
-                  ユーザー名 (ユーザーID)<br>
-                  <%= user.user_name %>
-                  <span class="small text-secondary"> (<%= user.user_name_id %>)</span>
-                </div>
-                <div class="col-auto">
-                  投稿数： <%= user.posts.count %> 件
-                </div>
-            </div>
-          <% end %>
+        <% if @user.present? %>
+          <%= render partial: "public/users/user_list", collection: @users, as: "user" %>
+        <% else %>
+          <div class="col-12 mx-auto">
+            <p class="text-center">
+              フォローされているユーザーはいません
+            </p>
+          </div>
         <% end %>
       </div>
     </div>

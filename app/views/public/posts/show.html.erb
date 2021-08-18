@@ -6,9 +6,9 @@
         <h5><strong>投稿内容</strong></h5>
         <div class="row">
           <div class="col-4">イメージ画像</div>
-          <div class="col-8 text-center">
+          <div class="col-8 text-left text-secondary">
             <% if @post.post_images.blank? %>
-              <span>-</span>
+              <span>- no image -</span>
             <% else %>
               <% if @post.post_images.present? %>
                 <div id="slider">
@@ -21,7 +21,7 @@
           </div>
         </div>
         <table class="table table-borderless">
-          <tr>
+          <tr class="pb-0">
             <td class="col-4">
               投稿ユーザー<br>
               <span class="small text-secondary">(ユーザーID)</span>
@@ -30,69 +30,77 @@
               <%= link_to user_path(@post.user), class:"text-decoration-none" do %>
                 <%= @post.user.user_name %><br>
                 <span class="small text-secondary">(<%= @post.user.user_name_id %>)　　</span>
-                <% unless @post.user == current_user %>
+                <% if user_signed_in? && @post.user != current_user %>
                   <% if current_user.following?(@post.user) %>
-                    <%= link_to "フォロー中", user_relationship_path(user_id: @post.user), method: :delete, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+                    <%= link_to "フォロー中", user_relationship_path(user_id: @post.user), method: :delete, class:"btn btn-sm btn-secondary text-white text-decoration-none", data: { confirm: "フォローを解除しますか？"} %>
                   <% else %>
-                    <%= link_to "フォローする", user_relationships_path(user_id: @post.user), method: :post, class:"btn btn-sm btn-secondary text-white text-decoration-none" %>
+                    <%= link_to "フォローする", user_relationships_path(user_id: @post.user), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
                   <% end %>
                 <% end %>
               <% end %>
-              </td>
+            </td>
           </tr>
-          <tr>
+          <tr class="pb-0">
             <td>投稿内容</td>
             <td><%= simple_format(h(@post.action)) %></td>
           </tr>
-          <tr>
+          <tr class="pb-0">
             <td>所要時間</td>
             <td><%= @post.time_required %>分</td>
           </tr>
-          <tr>
+          <tr class="pb-0">
             <td>予算</td>
             <td><%= @post.budget %>円</td>
           </tr>
-          <tr>
+          <tr class="pb-0">
             <td>いいね</td>
             <td>
-              <% if @post.favorited_by?(current_user) %>
-                <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :delete, class:"btn btn-sm btn-danger text-white text-decoration-none" %>
+              <% if user_signed_in? %>
+                <% if @post.favorited_by?(current_user) %>
+                  <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :delete, class:"btn btn-sm btn-danger text-white text-decoration-none" %>
+                <% else %>
+                  <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+                <% end %>
               <% else %>
-                <%= link_to "♡ #{@post.favorites.count}", post_favorites_path(post_id: @post), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+                <%= link_to "♡#{@post.favorites.count}", new_user_session_path, class:"btn btn-sm btn-secondary text-white text-decoration-none", data: {confirm: "ログインユーザーのみ利用できます。\nログイン画面に移動しますか？"} %>
               <% end %>
             </td>
-            <tr>
-              <td colspan="2">
-                <% if @post.user == current_user %>
-                  <%= link_to edit_post_path(@post), class:"text-decoration-none" do %>
-                    <strong><i class="fas fa-edit h3"></i></strong>
-                  <% end %>
-                  <span>　</span>
-                  <%= link_to post_path(@post), method: :delete, class:"text-decoration-none", data: {confirm: "投稿を削除しますか？"} do %>
-                    <strong><i class="fas fa-trash-alt text-danger h3"></i></strong>
-                  <% end %>
+          </tr>
+          <tr>
+            <td>
+            <% if user_signed_in? %>
+              <% if @post.user == current_user %>
+                <%= link_to edit_post_path(@post), class:"text-decoration-none" do %>
+                  <strong><i class="fas fa-edit h3"></i></strong>
                 <% end %>
-                <% if @post.reported_by?(current_user) %>
-                  <span>　</span><%= link_to "通報取消", post_post_report_destroy_path(post_id: @post), method: :delete, class:"text-secondary small text-right" %>
-                <% else %>
-                  <span>　</span><%= link_to "通報", post_post_report_create_path(post_id: @post.id), method: :post, class:"text-secondary small text-right" %>
+                <span>　</span>
+                <%= link_to post_path(@post), method: :delete, class:"text-decoration-none mr-3", data: {confirm: "投稿を削除しますか？"} do %>
+                  <strong><i class="fas fa-trash-alt text-danger h3"></i></strong>
                 <% end %>
-              </td>
-            </tr>
+              <% end %>
+              <% if @post.reported_by?(current_user) %>
+                <%= link_to "通報取消", post_post_report_destroy_path(post_id: @post), method: :delete, class:"text-secondary small text-right" %>
+              <% else %>
+                <%= link_to "通報する", post_post_report_create_path(post_id: @post.id), method: :post, class:"text-secondary small text-right" %>
+              <% end %>
+            <% end %>
+            </td>
           </tr>
         </table>
       <div class="my-3"></div>
       <div class="border p-3">
-        <h5><strong>コメント投稿</strong></h5>
-        <div class="row">
-          <div class="col-12 text-right">
-            <%= form_with model:[@post, @comment], local: true do |f| %>
-              <%= f.text_area :comment, class:"col-12", placeholder: "コメント入力" %><br>
-              <%= f.submit "コメント投稿" %>
-            <% end %>
+        <% if user_signed_in? %>
+          <h5><strong>コメント投稿</strong></h5>
+          <div class="row">
+            <div class="col-12 text-right">
+              <%= form_with model:[@post, @comment], local: true do |f| %>
+                <%= f.text_area :comment, class:"col-12", placeholder: "コメント入力" %><br>
+                <%= f.submit "コメント投稿" %>
+              <% end %>
+            </div>
           </div>
-        </div>
-        <div class="col-11 mx-auto my-3 border"></div>
+          <div class="col-11 mx-auto my-3 border"></div>
+        <% end %>
         <h5><strong>コメント一覧</strong></h5>
         <% if @post.comments.blank? %>
           <div class="col-auto text-center">
@@ -115,12 +123,14 @@
                         <span class="text-right"><i class="fas fa-trash-alt text-danger"></i></span>
                       <% end %>
                     <% end %>
-                    <% if comment.reported_by?(current_user, @post) %>
-                      <span>　</span>
-                      <%= link_to "通報取消", post_comment_comment_report_destroy_path(post_id: @post, comment_id: comment.id), method: :delete, class:"text-secondary small text-right" %>
-                    <% else %>
-                      <span>　</span>
-                      <%= link_to "通報", post_comment_comment_report_create_path(post_id: @post.id, comment_id: comment.id), method: :post, class:"text-secondary small text-right" %>
+                    <% if user_signed_in? %>
+                      <% if comment.reported_by?(current_user, @post) %>
+                        <span>　</span>
+                        <%= link_to "通報取消", post_comment_comment_report_destroy_path(post_id: @post, comment_id: comment.id), method: :delete, class:"text-secondary small text-right" %>
+                      <% else %>
+                        <span>　</span>
+                        <%= link_to "通報", post_comment_comment_report_create_path(post_id: @post.id, comment_id: comment.id), method: :post, class:"text-secondary small text-right" %>
+                      <% end %>
                     <% end %>
                   </div>
                 </div>
