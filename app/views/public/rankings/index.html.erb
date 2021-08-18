@@ -20,56 +20,65 @@
       <div class="border p-3">
         <% if @datas.blank? %>
           <h5><strong>今月の人気投稿 TOP10</strong></h5>
+          <% last_favorite = 0 %>
+          <% j = 1 %>
           <% @all_ranks.each.with_index(1) do |post, i| %>
             <%= link_to post_path(post.id), class:"text-decoration-none" do %>
               <div class="row border-bottom py-3">
                 <div class="col-8">
-                  <p><strong>第<%= i %>位</strong></p>
+                  <% if i == 1 %>
+                    <% last_favorite = post.favorites.count %>
+                  <% end %>
+                  <% if post.favorites.count != last_favorite %>
+                    <% j = i %>
+                    <p><strong>第<%= j %>位</strong></p>
+                    <% last_favorite = post.favorites.count %>
+                  <% else post.favorites.count != last_favorite %>
+                    <% last_favorite = post.favorites.count %>
+                    <p><strong>第<%= j %>位</strong></p>
+                  <% end %>
 
                   <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                      <br>
-                      <%= post.user.user_name %>
-                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                      <br>
-                      <span class="small">予算：<%= post.time_required %>円</span>
-                      <span class="small"> / </span>
-                      <span class="small">所要時間：<%= post.budget %>分</span>
-                      <br>
-                      <span><%= simple_format(h(post.action)) %></span>
-                      <span>
-                        <% if post.favorited_by?(current_user) %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                        <% else %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                        <% end %>
-                      </span>
-                      <%= link_to post_path(post.id) do %>
-                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
-                      <% end %>
-                      <br>
-                      <span>
-                        <% if post.reported_by?(current_user) %>
-                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
-                        <% else %>
-                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
-                        <% end %>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <% if post.post_images.present? %>
-                        <div id="slider">
-                          <% post.post_images.each do |image| %>
-                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
-                          <% end %>
-                        </div>
+                  <br>
+                  <%= post.user.user_name %>
+                  <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+                  <br>
+                  <span class="small">予算：<%= post.time_required %>円</span>
+                  <span class="small"> / </span>
+                  <span class="small">所要時間：<%= post.budget %>分</span>
+                  <br>
+                  <span><%= simple_format(h(post.action)) %></span>
+                  <span>
+                    <% if post.favorited_by?(current_user) %>
+                      <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
+                    <% else %>
+                      <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
+                    <% end %>
+                  </span>
+                  <%= link_to post_path(post.id) do %>
+                    <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
+                  <% end %>
+                  <br>
+                  <span>
+                    <% if post.reported_by?(current_user) %>
+                      <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
+                    <% else %>
+                      <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
+                    <% end %>
+                  </span>
+                </div>
+                <div class="col-4">
+                  <% if post.post_images.present? %>
+                    <div class="slider">
+                      <% post.post_images.each do |image| %>
+                        <%= attachment_image_tag image, :image, :fill, 300, 300 %>
                       <% end %>
                     </div>
-                  </div>
-                <% end %>
-              <% end %>
-
-
-
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         <% else %>
           <h5><strong>検索結果</strong></h5>
           <span>検索結果表示</span>
