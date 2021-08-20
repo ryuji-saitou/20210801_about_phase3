@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery3
 //= require jquery_ujs
-//= require rails-ujs
+//  require rails-ujs
 //= require jquery.jscroll.min.js
 //= require popper
 //= require bootstrap-sprockets
