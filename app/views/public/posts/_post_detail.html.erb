@@ -23,11 +23,9 @@
                 <%= post.comments.count %>
               </div>
             <% end %>
-            <% if post.reported_by?(current_user) %>
-              <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right ml-2" %>
-            <% else %>
-              <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right ml-2" %>
-            <% end %>
+            <div class="post_btn">
+              <%= render partial: "public/reports/post_report_btn", locals: { post: post} %>
+            </div>
           </div>
         <% else %>
           <%= link_to "♡#{post.favorites.count}", new_user_session_path, class:"btn btn-sm btn-secondary text-white", data: {confirm: "ログインユーザーのみ利用できます。\nログイン画面に移動しますか？"} %>
