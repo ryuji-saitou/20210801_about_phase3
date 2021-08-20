@@ -10,13 +10,11 @@
             <% if @post.post_images.blank? %>
               <span>- no image -</span>
             <% else %>
-              <% if @post.post_images.present? %>
-                <div id="slider">
-                  <% @post.post_images.each do |image| %>
-                    <%= attachment_image_tag image, :image, :fill, 300, 300 %>
-                  <% end %>
-                </div>
-              <% end %>
+              <div class="slider col-11 text-center">
+                <% @post.post_images.each do |image| %>
+                  <%= attachment_image_tag image, :image, class: "img-responsive" %>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>

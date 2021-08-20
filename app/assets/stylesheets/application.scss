@@ -48,8 +48,31 @@ nav.pagination {          // ◀︎kaminariのページ表示をオフにして�
 }                         // 表示されないようにしています。
 // ▲home:無限スクロールに関する記述
 
+// ▼slick(画像スライド)に関する記述
+.slick img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+// ▲slick(画像スライド)に関する記述
+
 // ▼search:検索条件に関する記述
 #hidden2 {
   display: none;
 }
 // ▲search:検索条件に関する記述
+
+// ▼post/show:画像拡大に関する記述
+.modal-custum{
+  position: relative;
+}
+.modal-btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #000;
+  color:#fff;
+  z-index: 10;
+  border: 0;
+}
+// ▲post/show:画像拡大に関する記述

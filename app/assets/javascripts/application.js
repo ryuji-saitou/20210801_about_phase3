@@ -46,7 +46,7 @@ $(document).on('turbolinks:load', function() {
 document.addEventListener("turbolinks:load", function(){
   $(function() {
     $('.slider').slick({
-      dots: true, //スライドの下にドットのナビゲーションを表示
+      dots: true //スライドの下にドットのナビゲーションを表示
     });
   });
 });
