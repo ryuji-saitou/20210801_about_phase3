@@ -90,54 +90,12 @@
       <div class="my-3"></div>
       <div class="border p-3">
         <% if user_signed_in? %>
-          <h5><strong>コメント投稿</strong></h5>
-          <div class="row">
-            <div class="col-12 text-right">
-              <%= form_with model:[@post, @comment], local: true do |f| %>
-                <%= f.text_area :comment, class:"col-12", placeholder: "コメント入力" %><br>
-                <%= f.submit "コメント投稿" %>
-              <% end %>
-            </div>
-          </div>
+          <%= render "public/comments/comment_form", post: @post, comment: @comment %>
           <div class="col-11 mx-auto my-3 border"></div>
         <% end %>
-        <h5><strong>コメント一覧</strong></h5>
-        <% if @post.comments.blank? %>
-          <div class="col-auto text-center">
-            <span>まだコメントはありません</span>
-          </div>
-        <% else %>
-          <div class="post_comments">
-            <% @post.comments.each do |comment| %>
-              <%= link_to user_path(comment.user.id) do %>
-                <div class="row border-bottom py-3">
-                  <div class="col-auto">
-                    <%= attachment_image_tag comment.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                  </div>
-                  <div class="col-auto">
-                    <%= comment.user.user_name %>
-                    <span class="small text-secondary">　(<%= comment.user.user_name_id %>)</span><br>
-                    <span><%= simple_format(h(comment.comment)) %></span>
-                    <% if comment.user == current_user %>
-                      <%= link_to post_comment_path(comment.post, comment), method: :delete, data: {confirm: "コメントを削除しますか？"} do %>
-                        <span class="text-right"><i class="fas fa-trash-alt text-danger"></i></span>
-                      <% end %>
-                    <% end %>
-                    <% if user_signed_in? %>
-                      <% if comment.reported_by?(current_user, @post) %>
-                        <span>　</span>
-                        <%= link_to "通報取消", post_comment_comment_report_destroy_path(post_id: @post, comment_id: comment.id), method: :delete, class:"text-secondary small text-right" %>
-                      <% else %>
-                        <span>　</span>
-                        <%= link_to "通報", post_comment_comment_report_create_path(post_id: @post.id, comment_id: comment.id), method: :post, class:"text-secondary small text-right" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+        <div class="post_comments">
+          <%= render "public/comments/comment_lists", post: @post %>
+        </div>
       </div>
     </div>
   </div>
