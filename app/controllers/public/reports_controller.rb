@@ -5,15 +5,13 @@ class Public::ReportsController < ApplicationController
     @report.user_id = current_user.id
     @report.post_id = @post.id
     @report.save
-    redirect_to post_path(@post.id)
   end
 
   def post_report_destroy
     @post = Post.find(params[:post_id])
     # comment_idが空のものを拾って削除したい
-    # @report = Report.find_by(post_id: @post.id, comment_id: nil, user_id: current_user)
+    @report = Report.find_by(post_id: @post.id, comment_id: nil, user_id: current_user)
     @report.destroy
-    redirect_to post_path(@post.id)
   end
 
   def comment_report_create

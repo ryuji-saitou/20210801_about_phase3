@@ -1,4 +1,4 @@
-<% if post.reported_by?(current_user) %>
+<% if post.reported_by?(current_user, post) %>
   <%= link_to "通報済み", post_post_report_destroy_path(post_id: post.id), method: :delete, remote: true, class:"text-secondary small text-right ml-2", data: { confirm: "通報を取り消しますか？"} %>
 <% else %>
   <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, remote: true, class:"text-secondary small text-right ml-2" %>
