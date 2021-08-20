@@ -2,50 +2,48 @@
   <div class="row">
     <div class="col-8 mx-auto">
       <h3>Ranking</h3>
-      <div class="border p-3">
-        <h5><strong>ランキング検索条件</strong></h5>
+      <!--<div class="border p-3">-->
+      <!--  <h5><strong>ランキング検索条件</strong></h5>-->
 
         <!--▼ランキング検索条件-->
-        <%= form_with url: ranking_result_path, method: :get, local: true do |f| %>
-          <p>年月指定：<%= f.select 'search[year_month]', options_for_select({ "年月1" => "年月1", "年月2" => "年月2" }) %></p>
-          <p>予算指定最小：<%= f.number_field "search[budget_min]" %></p>
-          <p>予算指定最大：<%= f.number_field "search[budget_max]"  %></p>
-          <p><%= f.submit "検索" %></p>
-        <% end %>
+        <!--<#%= form_with url: ranking_result_path, method: :get, local: true do |f| %>-->
+        <!--  <p>年月指定：<#%= f.select 'search[year_month]', options_for_select({ "年月1" => "年月1", "年月2" => "年月2" }) %></p>-->
+        <!--  <p>予算指定最小：<#%= f.number_field "search[budget_min]" %></p>-->
+        <!--  <p>予算指定最大：<#%= f.number_field "search[budget_max]"  %></p>-->
+        <!--  <p><#%= f.submit "検索" %></p>-->
+        <!--<#% end %>-->
         <!--▲ランキング検索条件-->
 
-      </div>
-      <div class="py-3"><!--上下余白div--></div>
+
+      <!--</div>-->
+      <div class="py-3"></div>
       <div class="border p-3">
         <% if @datas.blank? %>
           <h5><strong>今月の人気投稿 TOP10</strong></h5>
-            <% @all_ranks.each.with_index(1) do |post, i| %>
-              <%= link_to post_path(post.id), class:"text-decoration-none" do %>
-                <div class="row border-bottom py-3">
-                  <div class="col-8">
-                    <p><strong>第<%= i %>位</strong></p>
-                    <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %><br>
-                    <%= post.user.user_name %>
-                    <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span><br>
-                    <span><%= simple_format(h(post.action)) %></span>
-                    <span class="small">予算：<%= post.time_required %>円</span>
-                    <span class="small"> / </span>
-                    <span class="small">所要時間：<%= post.budget %>分</span><br>
-                    <span>
-                      <% if post.favorited_by?(current_user) %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                      <% else %>
-                        <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                      <% end %>
-                    </span><br>
-                    <span>コメント： <%= post.comments.count %> 件</span>
-                  </div>
-                  <div class="col-4">
-                    <%= attachment_image_tag post, :post_image, class:"col-12 rounded float-center" %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
+          <% last_favorite = 0 %>
+          <% j = 1 %>
+          <% @all_ranks.each.with_index(1) do |post, i| %>
+            <div class="row">
+              <div class="col-12">
+                <!--▼順位表示-->
+                <% if i == 1 %>
+                  <% last_favorite = post.favorites.count %>
+                <% end %>
+                <% if post.favorites.count != last_favorite %>
+                  <% j = i %>
+                  <h6 class="pt-3 m-0"><strong>第<%= j %>位</strong></h6>
+                  <% last_favorite = post.favorites.count %>
+                <% else post.favorites.count != last_favorite %>
+                  <% last_favorite = post.favorites.count %>
+                  <h6 class="pt-3 m-0"><strong>第<%= j %>位</strong></h6>
+                <% end %>
+                <!--▲順位表示-->
+              </div>
+              <div class="col-12">
+                <%= render partial: "public/posts/post_detail", locals: {post: post} %>
+              </div>
+            </div>
+          <% end %>
         <% else %>
           <h5><strong>検索結果</strong></h5>
           <span>検索結果表示</span>

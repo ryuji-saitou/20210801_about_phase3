@@ -36,4 +36,37 @@ class User < ApplicationRecord
   end
   # ▲フォロー・フォロワーに関する記述
 
+  # ▼ユーザー検索機能に関する記述
+  scope :user_search, -> (search_params) do
+    return if search_params.blank?
+    user_name_like(search_params[:user_name])
+  end
+  scope :user_name_like, -> (user_name) { where("user_name LIKE ?", "%#{user_name}%") if user_name.present? }
+  # present? = 値が入っていれば処理する
+  # scope :メソッド名 -> (引数) {SQL文}
+  # ▼ユーザー検索機能に関する記述
+  # ▲投稿検索機能に関する記述
+
+  # ▼通知機能に関する記述
+  has_many :active_notifications, class_name: "Notification", foreign_key: "visitor_id", dependent: :destroy
+  has_many :passive_notifications, class_name: "Notification", foreign_key: "visited_id", dependent: :destroy
+
+  # フォロー通知のメソッド
+  def create_notification_follow!(current_user)
+    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'follow'])
+    if temp.blank?
+      notification = current_user.active_notifications.new(
+        visited_id: id,
+        action: 'follow'
+      )
+      # 自分で自分をフォローすることはないため削除
+      # if notification.visitor_id == notification.visited_id
+      #   notification.checked = true
+      # end
+      notification.save if notification.valid?
+    end
+  end
+
+  # ▲通知機能に関する記述
+
 end

@@ -1,0 +1,49 @@
+<div class="border p-3">
+  <table class="table table-borderless">
+    <tr class="border-bottom">
+      <td class="col-3">プロフィール画像</td>
+      <td class="col-9"><%= attachment_image_tag user, :profile_image, :fill, 100, 100, fallback: "user/no_image.jpg", size:'100x100' %></td>
+    </tr>
+    <tr class="border-bottom">
+      <td>
+        ユーザー名 <span class="small text-secondary">(ID)</span>
+      </td>
+      <td>
+        <%= user.user_name %>
+        <span class="small text-secondary"> (<%= user.user_name_id %>)　　 </span>
+        <% if user_signed_in? && user != current_user && current_user.following?(user) %>
+          <%= link_to "フォロー中", user_relationship_path(user_id: user), method: :delete, class:"btn btn-sm btn-secondary text-white text-decoration-none", data: { confirm: "フォローを解除しますか？"} %>
+        <% elsif user_signed_in?  && user != current_user && !current_user.following?(user) %>
+          <%= link_to "フォローする", user_relationships_path(user_id: user), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="border-bottom">
+      <td>プロフィール</td>
+      <td><%= user.profile_introduction %></td>
+    </tr>
+    <tr class="border-bottom">
+      <td>Link</td>
+      <td><%= link_to "#{user.profile_sns_link}", "#{user.profile_sns_link}", target: :_blank, rel: "noopener noreferrer" %></td>
+    </tr>
+    <tr class="border-bottom">
+      <td>フォロー数</td>
+      <td>
+        <%= link_to user_followings_path(user.id) do %>
+          <%= user.followings.count %>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="border-bottom">
+      <td>フォロワー数</td>
+      <td>
+        <%= link_to user_followers_path(user.id) do %>
+          <%= user.followers.count %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="small text-secondary text-right">※<%= user.created_at %>から利用しています</td>
+    </tr>
+  </table>
+</div>

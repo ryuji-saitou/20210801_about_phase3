@@ -16,7 +16,7 @@
           <!--▼post検索条件-->
           <div id="hidden1">
             <%= form_with(scope: :search, url: search_result_path, method: :post, local: true)do |f| %>
-              <%= f.hidden_field :search_target, value: "post" %>
+              <%= f.hidden_field :search_target, :value => "post" %>
               <div class="form-group row">
                 <%= f.label :action, "■投稿内容：", class:"col-form-label col-4" %>
                 <%= f.text_field :action, value: @search_params[:action], class:"form-control col-6" %>
@@ -33,12 +33,13 @@
                 <p class="p-1">　〜　</p>
                 <%= f.number_field :budget_to, value: @search_params[:budget_to], class:"form-control col-3" %>
               </div>
-              <div class="form-group row">
-                <%= f.label :created_at, "■投稿年月：", class:"col-form-label col-4" %>
-                <%= f.date_field :created_at_from, value: @search_params[:created_at_from], class:"form-control col-3" %>
-                <p class="p-1">　〜　</p>
-                <%= f.date_field :created_at_to, value: @search_params[:created_at_to], class:"form-control col-3" %>
-              </div>
+              <!--検索：投稿年月での絞り込み-->
+              <!--<div class="form-group row">-->
+              <!--  <%#= f.label :created_at, "■投稿年月：", class:"col-form-label col-4" %>-->
+              <!--  <%#= f.date_field :created_at_from, value: @search_params[:created_at_from], class:"form-control col-3" %>-->
+              <!--  <p class="p-1">　〜　</p>-->
+              <!--  <%#= f.date_field :created_at_to, value: @search_params[:created_at_to], class:"form-control col-3" %>-->
+              <!--</div>-->
               <div class="action">
                 <%= f.submit "検索", class:"btn btn-sm btn-info" %>
               </div>
@@ -51,13 +52,15 @@
             <%= form_with(scope: :search, url: search_result_path, method: :post, local: true)do |f| %>
               <%= f.hidden_field :search_target, value: "user" %>
               <div class="form-group row">
-                <%= f.label :search_keyword, "■キーワード：", class:"col-form-label col-4" %>
-                <%= f.text_field :search_keyword, value: @search_keyword, class:"form-control col-7" %>
+                <%= f.label :user_name, "■ユーザーネーム：", class:"col-form-label col-4" %>
+                <%= f.text_field :user_name, value: @search_params[:user_name], class:"form-control col-7" %>
               </div>
-              <div class="form-group row">
-                <%= f.label :how_old, "■年齢：", class:"col-form-label col-4" %>
-                <%= f.number_field :how_old, class:"form-control col-7" %>
-              </div>
+              <!--<div class="form-group row">-->
+              <!--  <%#= f.label :how_old, "■年齢：", class:"col-form-label col-4" %>-->
+              <!--  <%#= f.number_field :how_old_min_age, value: @search_params[:how_old_min_age], class:"form-control col-3" %>-->
+              <!--  <p class="p-1">　〜　</p>-->
+              <!--  <%#= f.number_field :how_old_max_age, value: @search_params[:how_old_max_age], class:"form-control col-3" %>-->
+              <!--</div>-->
               <div class="action">
                 <%= f.submit "検索", class:"btn btn-sm btn-info" %>
               </div>
@@ -70,60 +73,57 @@
 
       </div>
       <div class="py-3"><!--上下余白div--></div>
-      <% if @posts.present? %>
-        <div class="border p-3">
-          <h5><strong>検索結果</strong></h5>
-          <p>検索結果ソート項目</p>
-            <div id="tab1" class="tab-pane active scroll-list jscroll">
-              <% @posts.each do |post| %>
-                <%= link_to post_path(post.id) do %>
-                  <div class="row border-bottom py-3">
-                    <div class="col-8">
-                      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
-                      <br>
-                      <%= post.user.user_name %>
-                      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
-                      <br>
-                      <span class="small">予算：<%= post.time_required %>円</span>
-                      <span class="small"> / </span>
-                      <span class="small">所要時間：<%= post.budget %>分</span>
-                      <br>
-                      <span><%= simple_format(h(post.action)) %></span>
-                      <span>
-                        <% if post.favorited_by?(current_user) %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, class:"btn btn-sm btn-danger text-white" %>
-                        <% else %>
-                          <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, class:"btn btn-sm btn-info text-white" %>
-                        <% end %>
-                      </span>
-                      <%= link_to post_path(post.id) do %>
-                        <span class="btn btn-sm btn-secondary text-white"><i class="fas fa-comments"></i> <%= post.comments.count %></span>
-                      <% end %>
-                      <br>
-                      <span>
-                        <% if post.reported_by?(current_user) %>
-                          <%= link_to "通報取消", post_post_report_destroy_path(post_id: post), method: :delete, class:"text-secondary small text-right" %>
-                        <% else %>
-                          <%= link_to "通報", post_post_report_create_path(post_id: post.id), method: :post, class:"text-secondary small text-right" %>
-                        <% end %>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <% if post.post_images.present? %>
-                        <div id="slider">
-                          <% post.post_images.each do |image| %>
-                            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
-                          <% end %>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-              <!--<#%= paginate @posts %>-->
+      <div class="border p-3">
+        <div>
+          <% if @posts.present? %>
+            <h5><strong>検索結果</strong></h5>
+            <div class="row border rounded mx-auto bg-light">
+              <div class="col-12 small text-center m-0">
+          <!--  <span class="mx-1">-->
+          <!--    ID-->
+          <!--    <#%= sort_asc('id', @search_params) %>-->
+          <!--    <#%= sort_desc('id', @search_params) %>-->
+          <!--  </span>-->
+          <!--  <span class="mx-1"> / </span>-->
+              </div>
             </div>
+            <%= render partial: "public/posts/post_detail", collection: @posts, as: "post" %>
+          <% elsif @users.present? %>
+            <h5><strong>検索結果</strong></h5>
+            <div class="row border rounded mx-auto bg-light">
+              <div class="col-12 small text-center m-0">
+                <span class="mx-1">ソート項目：</span>
+                <span class="mx-1">
+                  ID
+                  <%= sort_asc('id', @search_params) %>
+                  <%= sort_desc('id', @search_params) %>
+                </span>
+                <span class="mx-1"> / </span>
+                <span class="mx-1">
+                  ユーザーID
+                  <%= sort_asc('user_name_id', @search_params) %>
+                  <%= sort_desc('user_name_id', @search_params) %>
+                </span>
+              </div>
+            </div>
+            <% @users.each do |user| %>
+              <%= link_to user_path(user.id), class:"text-decoration-none" do %>
+                <div class="row border-bottom py-3">
+                  <div class="col-auto text-right">
+                    <%= attachment_image_tag user, :profile_image, fallback: "user/no_image.jpg", size:'80x80' %>
+                  </div>
+                  <div class="col-auto text-left">
+                    <%= user.user_name %><br>
+                    <span class="small text-secondary">
+                      (<%= user.user_name_id %>)
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,5 @@
+<% if post.favorited_by?(current_user) %>
+  <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :delete, remote: true, class:"btn btn-sm btn-danger text-white text-decoration-none" %>
+<% else %>
+  <%= link_to "♡ #{post.favorites.count}", post_favorites_path(post_id: post), method: :post, remote: true, class:"btn btn-sm btn-info text-white text-decoration-none" %>
+<% end %>
