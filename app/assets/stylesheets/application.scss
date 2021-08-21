@@ -30,6 +30,12 @@
   box-sizing: border-box;
 }
 
+.navbar-brand, .start p {
+  font-family: coquette,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .tab-content a {
   color: black;
   text-decoration: none;
@@ -43,6 +49,27 @@
 .text-decoration-none {
   text-decoration: none;
 }
+
+// ▼topエフェクトに関する記述
+.start {
+	background: #FFF;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9000;
+}
+.start p {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	display: none;
+	z-index: 9999;
+	width: 280px;
+}
+// ▲topエフェクトに関する記述
 
 // ▼home:無限スクロールに関する記述
 nav.pagination {          // ◀︎kaminariのページ表示をオフにしています
@@ -59,6 +86,11 @@ nav.pagination {          // ◀︎kaminariのページ表示をオフにして�
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: paleturquoise;
 }
 // ▲slick(画像スライド)に関する記述
 

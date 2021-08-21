@@ -11,8 +11,9 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :reports  , dependent: :destroy
 
-  validates :user_name           , presence: true
-  validates :user_name_id        , presence: true, uniqueness: true
+  validates :user_name           , presence: true #format: { with: /\A[０-９]+\z/ }
+  validates :user_name_id        , presence: { message: "id は半角英数字で入力してください。"},
+                                   uniqueness: { message: "id は既に使用されております。"} #format: { with: /\A[-]?[0-9]+(\.[0-9]+)?\z/ }
   validates :birthday            , presence: true
   validates :profile_introduction, length: { maximum: 200 }
   # validates :profile_sns_link    , format: /\A#{URI::regexp(%w(http https))}\z/ # urlフォーマットのみ入力可

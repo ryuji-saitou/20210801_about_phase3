@@ -1,3 +1,12 @@
+<!--topアニメーションに関する記述-->
+<% if !user_signed_in? %>
+  <% if current_page?("https://640345f7cad546e3a85e9944249e7a6b.vfs.cloud9.ap-northeast-1.amazonaws.com/") %>
+    <div class="start">
+      <p>my luxury time</p>
+    </div>
+  <% end %>
+<% end %>
+<!--topアニメーションに関する記述-->
 <div class="container">
   <div class="row">
     <div class="col-8 mx-auto">
@@ -44,6 +53,7 @@
 
             <!--▼タイムライン投稿表示-->
             <div id="tab1" class="tab-pane scroll-list <%= params[:tab] == 'timeline' || !params[:tab].present? ? ' active' : '' %>">
+
               <% if @follow_posts.present? %>
                 <%= render partial: "public/posts/post_detail", collection: @follow_posts, as: "post" %>
                 <div class="jscroll">

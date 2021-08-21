@@ -8,12 +8,10 @@
     <!--JavaScriptエラーが生じるため "turbolink" 無効化-->
     <!--<#%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>-->
     <!--<#%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>-->
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css">
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <script>
       (function(d) {
         var config = {
@@ -27,47 +25,38 @@
   </head>
 
   <body>
-
     <header>
-      <nav class="navbar navbar-expand">
-        <span class="navbar-brand">My Luxury Time</span>
-        <% if admin_signed_in? %>
+      <nav class="navbar navbar-expand bg-light">
+        <%= link_to "my luxury time", root_path, class:"navbar-brand text-dark strong" %>
+        <% if user_signed_in? %>
           <div class="navbar-nav mr-auto">
-            <%= link_to "会員一覧", admin_users_path, class:"nav-item nav-link" %>
-            <%= link_to "通報一覧", admin_reports_path, class:"nav-item nav-link" %>
+            <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "New post", new_post_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Search", search_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
           </div>
           <div class="navbar-nav">
-            <%= link_to "Log out", destroy_admin_user_session_path, method: :delete, class:"nav-item nav-link" %>
-          </div>
-        <% elsif user_signed_in? %>
-          <div class="navbar-nav mr-auto">
-            <%= link_to "Home", root_path, class:"nav-item nav-link" %>
-            <%= link_to "About", about_path, class:"nav-item nav-link" %>
-            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link" %>
-            <%= link_to "New post", new_post_path, class:"nav-item nav-link" %>
-            <%= link_to "Search", search_path, class:"nav-item nav-link" %>
-          </div>
-          <div class="navbar-nav">
-            <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link" %>
-            <%= link_to "Notice", user_notifications_path(current_user.id), class:"nav-item nav-link" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link" %>
+            <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Notice", user_notifications_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link text-dark border rounded mx-2" %>
           </div>
         <% else %>
           <div class="navbar-nav mr-auto">
-            <%= link_to "Home", root_path, class:"nav-item nav-link" %>
-            <%= link_to "About", about_path, class:"nav-item nav-link" %>
-            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link" %>
+            <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
           </div>
           <div class="navbar-nav">
-            <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link" %>
-            <%= link_to "Sign up", new_user_registration_path, class:"nav-item nav-link" %>
+            <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            <%= link_to "Sign up", new_user_registration_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
           </div>
         <% end %>
       </nav>
     </header>
 
-    <p><%= notice %></p>
-    <p><%= alert %></p>
+    <p class="text-center bg-info text-white"><%= notice %></p>
+    <p class="text-center bg-danger"><%= alert %></p>
     <%= yield %>
 
     <footer class="bg-light text-center py-3 mt-3">
@@ -75,5 +64,6 @@
     </footer>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   </body>
 </html>
