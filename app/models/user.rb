@@ -44,8 +44,7 @@ class User < ApplicationRecord
   scope :user_name_like, -> (user_name) { where("user_name LIKE ?", "%#{user_name}%") if user_name.present? }
   # present? = 値が入っていれば処理する
   # scope :メソッド名 -> (引数) {SQL文}
-  # ▼ユーザー検索機能に関する記述
-  # ▲投稿検索機能に関する記述
+  # ▲ユーザー検索機能に関する記述
 
   # ▼通知機能に関する記述
   has_many :active_notifications, class_name: "Notification", foreign_key: "visitor_id", dependent: :destroy
@@ -66,7 +65,6 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-
   # ▲通知機能に関する記述
 
 end

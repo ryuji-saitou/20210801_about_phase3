@@ -1,15 +1,15 @@
-<%= link_to user_path(user.id) do %>
+<%= link_to user_path(user.id), class:"d-flex" do %>
   <div class="row border-bottom py-3">
     <div class="col-auto">
-      <%= attachment_image_tag user, :profile_image, :fill, 50, 50, fallback: "user/no_image.jpg", size:'50x50' %></td>
+      <%= attachment_image_tag user, :profile_image, :fill, 50, 50, fallback: "user/no_image.jpg", size:'50x50' %>
     </div>
-    <div class="col-auto">
+    <div class="col-auto ml-2">
       ユーザー名 (ユーザーID)<br>
       <%= user.user_name %>
       <span class="small text-secondary"> (<%= user.user_name_id %>)</span>
     </div>
-    <div class="col-auto">
-      投稿数： <%= user.posts.count %> 件
+    <div class="col-auto user_follow_<%= user.id %> ml-2">
+      <%= render partial: "public/relationships/relationship", locals: { user: user} %>
     </div>
   </div>
 <% end %>
