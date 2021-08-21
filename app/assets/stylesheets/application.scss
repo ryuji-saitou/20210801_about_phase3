@@ -17,10 +17,14 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
 
 * {
   padding: 0;
   margin: 0;
+  font-family: din-condensed,sans-serif;
+    font-weight: 300;
+    font-style: normal;
   box-sizing: border-box;
 }
 

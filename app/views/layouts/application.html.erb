@@ -10,6 +10,7 @@
     <!--<#%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>-->
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" href="https://use.typekit.net/gvv5yez.css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
@@ -19,7 +20,7 @@
   <body>
 
     <header>
-      <nav class="navbar navbar-expand bg-light">
+      <nav class="navbar navbar-expand">
         <span class="navbar-brand">My Luxury Time</span>
         <% if admin_signed_in? %>
           <div class="navbar-nav mr-auto">
@@ -60,7 +61,7 @@
     <p><%= alert %></p>
     <%= yield %>
 
-    <footer class="bg-light text-center py-3 mt-3">
+    <footer class="text-center py-3 mt-3">
       <span>footer</span>
     </footer>
 
