@@ -24,17 +24,13 @@
               投稿ユーザー<br>
               <span class="small text-secondary">(ユーザーID)</span>
             </td>
-            <td class="col-8">
+            <td class="col-8 d-flex">
               <%= link_to user_path(@post.user), class:"text-decoration-none" do %>
                 <%= @post.user.user_name %><br>
                 <span class="small text-secondary">(<%= @post.user.user_name_id %>)　　</span>
-                <% if user_signed_in? && @post.user != current_user %>
-                  <% if current_user.following?(@post.user) %>
-                    <%= link_to "フォロー中", user_relationship_path(user_id: @post.user), method: :delete, class:"btn btn-sm btn-secondary text-white text-decoration-none", data: { confirm: "フォローを解除しますか？"} %>
-                  <% else %>
-                    <%= link_to "フォローする", user_relationships_path(user_id: @post.user), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
-                  <% end %>
-                <% end %>
+                <div class="user_follow_<%= @post.user.id %>">
+                  <%= render "public/relationships/relationship", user: @post.user %>
+                </div>
               <% end %>
             </td>
           </tr>

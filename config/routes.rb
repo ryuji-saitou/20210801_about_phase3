@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
     # ranking
     resources :rankings, only: [:index]
-    get "/rankings/result", to: "rankings#result", as: "ranking_result"
+    post "/rankings/search", to: "rankings#ranking_search", as: "ranking_search"
 
     # search
     get  "/search", to: "searches#search"       , as: "search"

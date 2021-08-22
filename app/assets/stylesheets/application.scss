@@ -114,3 +114,23 @@ nav.pagination {          // ◀︎kaminariのページ表示をオフにして�
   border: 0;
 }
 // ▲post/show:画像拡大に関する記述
+
+// ▼パララックスデザインに関する記述
+.parallax {
+    min-height: 400px;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;    
+}
+.content {
+    padding: 60px;
+    background-color: #fff;
+}
+.parallax.bg-01 {
+    background-image: url(../img/sample-01.jpg);
+}
+.parallax.bg-02 {
+    background-image: url(../img/sample-02.jpg);
+}
+// ▲パララックスデザインに関する記述
