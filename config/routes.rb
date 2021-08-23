@@ -74,11 +74,11 @@ Rails.application.routes.draw do
 
   end
 
-  # admin側ルーティング
-  namespace :admin do
-    get "/", to: "homes#home", as: "home"
-    resources :reports, only: [:index, :destroy]
-    resources :users, only: [:index, :show, :update]
-  end
+  # # admin側ルーティング
+  # namespace :admin do
+  #   get "/", to: "homes#home", as: "home"
+  #   resources :reports, only: [:index, :destroy]
+  #   resources :users, only: [:index, :show, :update]
+  # end
 
 end
