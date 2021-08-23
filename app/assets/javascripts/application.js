@@ -77,3 +77,36 @@ document.addEventListener("turbolinks:load", function(){
   });
 });
 // ▲topアニメーション
+
+// ▼aboutページ
+// ページ表示とともに画像出現
+setTimeout(() => {
+  jQuery(function ($) {
+    var fadeIn = $('.fade-in');
+    // $(window).on('scroll', function () {
+    $(fadeIn).each(function () {
+      var offset = $(this).offset().top;
+      var scroll = $(window).scrollTop();
+      var windowHeight = $(window).height();
+      if (scroll > offset - windowHeight + 300) {
+        $(this).addClass("scroll-in");
+      }
+    });
+    // });
+  });
+}, 2800);
+
+jQuery(function ($) {
+  var fadeIn = $('.fade-in');
+  $(window).on('scroll', function () {
+    $(fadeIn).each(function () {
+      var offset = $(this).offset().top;
+      var scroll = $(window).scrollTop();
+      var windowHeight = $(window).height();
+      if (scroll > offset - windowHeight + 150) {
+        $(this).addClass("scroll-in");
+      }
+    });
+  });
+});
+// ▲aboutページ

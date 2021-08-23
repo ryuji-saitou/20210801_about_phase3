@@ -26,42 +26,46 @@
 
   <body>
     <header>
-      <nav class="navbar navbar-expand bg-light">
-        <%= link_to "my luxury time", root_path, class:"navbar-brand text-dark strong" %>
-        <% if user_signed_in? %>
-          <div class="navbar-nav mr-auto">
-            <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "New post", new_post_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Search", search_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-          </div>
-          <div class="navbar-nav">
-            <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Notice", user_notifications_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link text-dark border rounded mx-2" %>
-          </div>
-        <% else %>
-          <div class="navbar-nav mr-auto">
-            <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-          </div>
-          <div class="navbar-nav">
-            <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-            <%= link_to "Sign up", new_user_registration_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
-          </div>
-        <% end %>
-      </nav>
+      <% if !current_page?("https://640345f7cad546e3a85e9944249e7a6b.vfs.cloud9.ap-northeast-1.amazonaws.com/about") %>
+        <nav class="navbar navbar-expand bg-light">
+          <%= link_to "my luxury time", root_path, class:"navbar-brand text-dark strong" %>
+          <% if user_signed_in? %>
+            <div class="navbar-nav mr-auto">
+              <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "New post", new_post_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Search", search_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            </div>
+            <div class="navbar-nav">
+              <%= link_to "My page", user_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Notice", user_notifications_path(current_user.id), class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            </div>
+          <% else %>
+            <div class="navbar-nav mr-auto">
+              <%= link_to "Home", root_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "About", about_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Ranking", rankings_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            </div>
+            <div class="navbar-nav">
+              <%= link_to "Log in", new_user_session_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+              <%= link_to "Sign up", new_user_registration_path, class:"nav-item nav-link text-dark border rounded mx-2" %>
+            </div>
+          <% end %>
+        </nav>
+      <% end %>
     </header>
 
     <p class="text-center bg-info text-white"><%= notice %></p>
     <p class="text-center bg-danger"><%= alert %></p>
     <%= yield %>
 
-    <footer class="bg-light text-center py-3 mt-3">
-      <span>footer</span>
-    </footer>
+    <% if !current_page?("https://640345f7cad546e3a85e9944249e7a6b.vfs.cloud9.ap-northeast-1.amazonaws.com/about") %>
+      <footer class="bg-light text-center py-3 mt-3">
+        <span>footer</span>
+      </footer>
+    <% end %>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>

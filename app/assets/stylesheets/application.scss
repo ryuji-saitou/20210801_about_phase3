@@ -50,7 +50,7 @@
   text-decoration: none;
 }
 
-// ▼topエフェクトに関する記述
+// ▼aboutページ：アニメーションエフェクトに関する記述
 .start {
 	background: #FFF;
 	position: fixed;
@@ -61,6 +61,7 @@
 	z-index: 9000;
 }
 .start p {
+  font-size: 30px;
 	position: fixed;
 	left: 50%;
 	top: 50%;
@@ -69,7 +70,7 @@
 	z-index: 9999;
 	width: 280px;
 }
-// ▲topエフェクトに関する記述
+// ▲aboutページ：アニメーションエフェクトに関する記述
 
 // ▼home:無限スクロールに関する記述
 nav.pagination {          // ◀︎kaminariのページ表示をオフにしています
@@ -115,23 +116,53 @@ nav.pagination {          // ◀︎kaminariのページ表示をオフにして�
 }
 // ▲post/show:画像拡大に関する記述
 
-// ▼パララックスデザインに関する記述
-.parallax {
-    min-height: 400px;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+// ▼aboutページに関する記述
+.main_visual{
+  width: 100%;
+  height: 50%;
+  background-image: image-url("about/main_visual.jpg");
+  background-size: cover;
+  margin: 50px auto 0;
 }
-.content {
-    padding: 60px;
-    background-color: #fff;
+
+.main_visual-text1 {
+  padding-top  : 220px;
+  padding-right: 50px;
 }
-.parallax.bg-01 {
-  background-image: image-url("sample-01.jpg");
-  background-size:  cover;
+.main_visual-text2 {
+  padding-right: 50px;
 }
-.parallax.bg-02 {
-  background-image: image-url("sample-02.jpg");
+.main_visual-text3 {
+  padding-right: 50px;
 }
-// ▲パララックスデザインに関する記述
+
+.arrow {
+  width: 30px;
+  height: 30px;
+  border: 5px solid;
+  border-color:  transparent transparent #565656 #565656;
+  transform: rotate(-45deg);
+}
+
+.box{
+  width: 100%;
+  height: 600px;
+  background-color: white;
+  margin: 50px auto 0;
+}
+
+.fade-in {
+  opacity: 0;
+  transition-duration: 800ms;
+  transition-property: opacity, transform;
+}
+
+.fade-in-up {
+  transform: translate(0, 100px);
+}
+
+.scroll-in {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+// ▲aboutページに関する記述
