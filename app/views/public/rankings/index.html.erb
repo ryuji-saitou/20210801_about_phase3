@@ -2,42 +2,33 @@
   <div class="row">
     <div class="col-8 mx-auto">
       <h3>Ranking</h3>
-      <!--<div class="border p-3">-->
-      <!--  <h5><strong>ランキング検索条件</strong></h5>-->
-
-        <!--▼ランキング検索条件-->
-        <!--<#%= form_with url: ranking_result_path, method: :get, local: true do |f| %>-->
-        <!--  <p>年月指定：<#%= f.select 'search[year_month]', options_for_select({ "年月1" => "年月1", "年月2" => "年月2" }) %></p>-->
-        <!--  <p>予算指定最小：<#%= f.number_field "search[budget_min]" %></p>-->
-        <!--  <p>予算指定最大：<#%= f.number_field "search[budget_max]"  %></p>-->
-        <!--  <p><#%= f.submit "検索" %></p>-->
-        <!--<#% end %>-->
-        <!--▲ランキング検索条件-->
-
-
-      <!--</div>-->
+      <div class="border p-3">
+      <h5><strong>ランキング検索条件</strong></h5>
+      <%= form_with url: ranking_search_path, method: :post, local: true do |f| %>
+        <span>年月指定：<%= f.date_select :year_month, value: @date, discard_day: true %></span>
+        <span><%= f.submit "検索", class:"btn btn-sm btn-info col-2" %></span>
+      <% end %>
       <div class="py-3"></div>
       <div class="border p-3">
         <% if @datas.blank? %>
-          <h5><strong>今月の人気投稿 TOP10</strong></h5>
+          <h5><strong><%= @date.year %>年<%= @date.month %>月の人気投稿 TOP10</strong></h5>
           <% last_favorite = 0 %>
           <% j = 1 %>
-          <% @all_ranks.each.with_index(1) do |post, i| %>
+          <% @ranking_posts.each.with_index(1) do |post, i| %>
             <div class="row">
               <div class="col-12">
-                <!--▼順位表示-->
                 <% if i == 1 %>
                   <% last_favorite = post.favorites.count %>
                 <% end %>
                 <% if post.favorites.count != last_favorite %>
                   <% j = i %>
+                  <% break if j > 10 %><!--"break" で第10位までしか表示しないようにする-->
                   <h6 class="pt-3 m-0"><strong>第<%= j %>位</strong></h6>
                   <% last_favorite = post.favorites.count %>
                 <% else post.favorites.count != last_favorite %>
                   <% last_favorite = post.favorites.count %>
                   <h6 class="pt-3 m-0"><strong>第<%= j %>位</strong></h6>
                 <% end %>
-                <!--▲順位表示-->
               </div>
               <div class="col-12">
                 <%= render partial: "public/posts/post_detail", locals: {post: post} %>

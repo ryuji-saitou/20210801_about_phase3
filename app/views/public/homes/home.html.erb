@@ -44,6 +44,7 @@
 
             <!--▼タイムライン投稿表示-->
             <div id="tab1" class="tab-pane scroll-list <%= params[:tab] == 'timeline' || !params[:tab].present? ? ' active' : '' %>">
+
               <% if @follow_posts.present? %>
                 <%= render partial: "public/posts/post_detail", collection: @follow_posts, as: "post" %>
                 <div class="jscroll">
@@ -87,7 +88,7 @@
 
           <!--▼タブタイトル-->
           <ul class="nav nav-tabs nav-justified mx-auto">
-            <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">最新投稿</a></li>
+            <li class="nav-item"><a href="#tab1" class="nav-link active border" data-toggle="tab">最新投稿</a></li>
           </ul>
           <!--▲タブタイトル-->
 

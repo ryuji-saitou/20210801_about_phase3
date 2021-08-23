@@ -17,9 +17,9 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save
-      redirect_to root_path
+      redirect_to root_path, notice: "投稿が完了しました"
     else
-      render :confirm
+      render :new
     end
   end
 
@@ -29,8 +29,11 @@ class Public::PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    Post.find(params[:id]).update(post_params)
-    redirect_to post_path(@post)
+    if Post.find(params[:id]).update(post_params)
+      redirect_to post_path(@post), notice: "投稿内容を更新しました"
+    else
+      render :edit
+    end
   end
 
   def show
@@ -40,7 +43,7 @@ class Public::PostsController < ApplicationController
 
   def destroy
     Post.find(params[:id]).destroy
-    redirect_to user_path(current_user.id)
+    redirect_to user_path(current_user.id), alert: "投稿を削除しました"
   end
 
   private

@@ -10,7 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require_directory .
  *= require_self
  */
 
@@ -21,7 +21,19 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: puffin-display-soft, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  font-family: heisei-maru-gothic-std, sans-serif;
+    font-weight: 400;
+    font-style: normal;
   box-sizing: border-box;
+}
+
+.navbar-brand, .start p {
+  font-family: coquette,sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .tab-content a {
@@ -38,6 +50,28 @@
   text-decoration: none;
 }
 
+// ▼aboutページ：アニメーションエフェクトに関する記述
+.start {
+	background: #FFF;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9000;
+}
+.start p {
+  font-size: 30px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	display: none;
+	z-index: 9999;
+	width: 280px;
+}
+// ▲aboutページ：アニメーションエフェクトに関する記述
+
 // ▼home:無限スクロールに関する記述
 nav.pagination {          // ◀︎kaminariのページ表示をオフにしています
   display: none;
@@ -48,8 +82,110 @@ nav.pagination {          // ◀︎kaminariのページ表示をオフにして�
 }                         // 表示されないようにしています。
 // ▲home:無限スクロールに関する記述
 
+// ▼slick(画像スライド)に関する記述
+.slick img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: paleturquoise;
+}
+// ▲slick(画像スライド)に関する記述
+
 // ▼search:検索条件に関する記述
 #hidden2 {
   display: none;
 }
 // ▲search:検索条件に関する記述
+
+// ▼post/show:画像拡大に関する記述
+.modal-custum{
+  position: relative;
+}
+.modal-btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #000;
+  color:#fff;
+  z-index: 10;
+  border: 0;
+}
+// ▲post/show:画像拡大に関する記述
+
+// ▼aboutページに関する記述
+
+  // // ▼パララックスデザインに関する記述
+  // .parallax {
+  //     min-height: 400px;
+  //     background-position: center top;
+  //     background-repeat: no-repeat;
+  //     background-attachment: fixed;
+  //     background-size: cover;
+  // }
+  // .content {
+  //     padding: 60px;
+  //     background-color: #fff;
+  // }
+  // .parallax.bg-01 {
+  //   background-image: image-url("sample-01.jpg");
+  //   background-size:  cover;
+  // }
+  // .parallax.bg-02 {
+  //   background-image: image-url("sample-02.jpg");
+  // }
+  // // ▲パララックスデザインに関する記述
+
+.main_visual{
+  width: 100%;
+  height: 50%;
+  background-image: image-url("about/main_visual.jpg");
+  background-size: cover;
+  margin: 50px auto 0;
+}
+
+.main_visual-text1 {
+  padding-top  : 220px;
+  padding-right: 50px;
+}
+.main_visual-text2 {
+  padding-right: 50px;
+}
+.main_visual-text3 {
+  padding-right: 50px;
+}
+
+.arrow {
+  width: 30px;
+  height: 30px;
+  border: 5px solid;
+  border-color:  transparent transparent #565656 #565656;
+  transform: rotate(-45deg);
+}
+
+.box{
+  width: 100%;
+  height: 600px;
+  background-color: white;
+  margin: 50px auto 0;
+}
+
+.fade-in {
+  opacity: 0;
+  transition-duration: 800ms;
+  transition-property: opacity, transform;
+}
+
+.fade-in-up {
+  transform: translate(0, 100px);
+}
+
+.scroll-in {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+// ▲aboutページに関する記述
+

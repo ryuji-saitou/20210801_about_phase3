@@ -3,7 +3,6 @@ class Public::RelationshipsController < ApplicationController
     current_user.follow(params[:user_id])
     @user = User.find(params[:user_id])
     @user.create_notification_follow!(current_user)
-    redirect_to request.referer
     # ▲下記を簡素化したもの / "follow"はModel(user.rb)にて定義
     # @relationship = Relationship.new
     # @user = User.find(params[:user_id])
@@ -14,8 +13,8 @@ class Public::RelationshipsController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:user_id])
     current_user.unfollow(params[:user_id])
-    redirect_to request.referer
     # ▲下記を簡素化したもの / "unfollow"はModel(user.rb)にて定義
     # @user = User.find(params[:user_id])
     # @relationship = Relationship.find_by(followed_id: @user.id, follower_id: current_user.id)

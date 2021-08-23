@@ -4,6 +4,7 @@
       <h3>Profile edit</h3>
       <div class="border p-3">
         <%= form_with model: @user, local: true do |f| %>
+        <%= render "layouts/error_messages", model: f.object %>
         <table class="table table-borderless">
           <tr class="border-bottom">
             <td class="align-bottom">プロフィール画像</td>

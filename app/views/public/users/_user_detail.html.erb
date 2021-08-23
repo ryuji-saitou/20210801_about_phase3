@@ -9,13 +9,15 @@
         ユーザー名 <span class="small text-secondary">(ID)</span>
       </td>
       <td>
-        <%= user.user_name %>
-        <span class="small text-secondary"> (<%= user.user_name_id %>)　　 </span>
-        <% if user_signed_in? && user != current_user && current_user.following?(user) %>
-          <%= link_to "フォロー中", user_relationship_path(user_id: user), method: :delete, class:"btn btn-sm btn-secondary text-white text-decoration-none", data: { confirm: "フォローを解除しますか？"} %>
-        <% elsif user_signed_in?  && user != current_user && !current_user.following?(user) %>
-          <%= link_to "フォローする", user_relationships_path(user_id: user), method: :post, class:"btn btn-sm btn-info text-white text-decoration-none" %>
-        <% end %>
+        <div class="d-flex">
+          <div class="col">
+            <%= user.user_name %><br>
+            <span class="small text-secondary">(<%= user.user_name_id %>)</span>
+          </div>
+          <div class="col user_follow_<%= user.id %>">
+            <%= render partial: "public/relationships/relationship", locals: { user: user} %>
+          </div>
+        </div>
       </td>
     </tr>
     <tr class="border-bottom">

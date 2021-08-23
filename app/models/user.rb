@@ -11,8 +11,9 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :reports  , dependent: :destroy
 
-  validates :user_name           , presence: true
-  validates :user_name_id        , presence: true, uniqueness: true
+  validates :user_name           , presence: true #format: { with: /\A[０-９]+\z/ }
+  validates :user_name_id        , presence: { message: "id は半角英数字で入力してください。"},
+                                   uniqueness: { message: "id は既に使用されております。"} #format: { with: /\A[-]?[0-9]+(\.[0-9]+)?\z/ }
   validates :birthday            , presence: true
   validates :profile_introduction, length: { maximum: 200 }
   # validates :profile_sns_link    , format: /\A#{URI::regexp(%w(http https))}\z/ # urlフォーマットのみ入力可
@@ -44,8 +45,7 @@ class User < ApplicationRecord
   scope :user_name_like, -> (user_name) { where("user_name LIKE ?", "%#{user_name}%") if user_name.present? }
   # present? = 値が入っていれば処理する
   # scope :メソッド名 -> (引数) {SQL文}
-  # ▼ユーザー検索機能に関する記述
-  # ▲投稿検索機能に関する記述
+  # ▲ユーザー検索機能に関する記述
 
   # ▼通知機能に関する記述
   has_many :active_notifications, class_name: "Notification", foreign_key: "visitor_id", dependent: :destroy
@@ -66,7 +66,6 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-
   # ▲通知機能に関する記述
 
 end

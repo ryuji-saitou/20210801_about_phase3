@@ -18,8 +18,8 @@ class Post < ApplicationRecord
   # ▲いいね機能に関する記述
 
   # ▼投稿通報機能に関する記述
-    def reported_by?(user)
-      reports.where(user_id: user.id).exists?
+    def reported_by?(user, post)
+      reports.where(user_id: user.id, post_id: post.id, comment_id: nil).exists?
     end
   # ▲投稿通報機能に関する記述
 
