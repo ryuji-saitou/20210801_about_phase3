@@ -71,6 +71,10 @@ gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
 gem 'pry-byebug'
 gem 'activeadmin'
-gem 'dotenv-rails'
 gem 'cancancan'
 gem "kaminari"
+gem 'dotenv-rails'
+
+group :production do
+  gem "mysql2"
+end
