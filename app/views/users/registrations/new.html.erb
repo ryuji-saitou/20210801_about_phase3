@@ -1,51 +1,52 @@
 <div class="container">
   <div class="row">
     <div class="col-8 mx-auto">
-
-      <h2>Sign up</h2>
+      <h3>Sign up</h3>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "users/shared/error_messages", resource: resource %>
 
-        <div class="field">
-          <%= f.label :user_name, "ユーザー名" %><br />
+        <div class="field mt-2">
+          <%= f.label :user_name, "ユーザー名", class:"mb-0" %><br />
           <%= f.text_field :user_name, autocomplete: "user_name" %>
         </div>
 
-        <div class="field">
-          <%= f.label :user_name_id, "ユーザーID" %><br />
+        <div class="field mt-2">
+          <%= f.label :user_name_id, "ユーザーID", class:"mb-0" %><br />
           <%= f.text_field :user_name_id, autocomplete: "user_name_id" %>
         </div>
 
-        <div class="field">
-          <%= f.label :birthday, "生年月日" %><br />
+        <div class="field mt-2">
+          <%= f.label :birthday, "生年月日", class:"mb-0" %><br />
           <%= f.date_select :birthday, use_month_numbers: true,start_year: 1930, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1) %>
         </div>
 
-        <div class="field">
-          <%= f.label :email, "メールアドレス" %><br />
+        <div class="field mt-2">
+          <%= f.label :email, "メールアドレス", class:"mb-0" %><br />
           <%= f.email_field :email, autocomplete: "email" %>
         </div>
 
-        <div class="field">
-          <%= f.label :password, "パスワード(6文字以上)" %>
+        <div class="field mt-2">
+          <%= f.label :password, "パスワード", class:"mb-0" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em>(<%= @minimum_password_length %> 文字以上)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: "new-password" %>
         </div>
 
-        <div class="field">
+        <div class="field mt-2 mb-0">
           <%= f.label :password_confirmation, "パスワード確認" %><br />
           <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
         </div>
 
-        <div class="actions">
-          <%= f.submit "Sign up" %>
+        <div class="actions mt-4">
+          <%= f.submit "Sign up", class:"btn btn-sm btn-info col-2" %>
         </div>
       <% end %>
 
-      <%= render "users/shared/links" %>
+      <div class="text-decolation-nonemt-2 mt-2">
+        <%= render "users/shared/links" %>
+      </div>
 
     </div>
   </div>

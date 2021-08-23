@@ -127,7 +127,7 @@ ActiveAdmin.setup do |config|
   # config.comments = false
   #
   # You can change the name under which comments are registered:
-  # config.comments_registration_name = 'AdminComment'
+  config.comments_registration_name = 'AdminComment'
   #
   # You can change the order for the comments and you can change the column
   # to be used for ordering:
@@ -332,4 +332,9 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+
+  config.clear_stylesheets!
+  config.register_stylesheet "admin/active_admin.css"
+  config.clear_javascripts!
+  config.register_javascript "admin/active_admin.js"
 end

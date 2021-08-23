@@ -1,0 +1,51 @@
+<%= link_to post_path(post.id), class:"text-decoration-none" do %>
+  <div class="row border-bottom py-3">
+    <div class="col-7 mx-auto">
+      <%= attachment_image_tag post.user, :profile_image, :fill, 80, 80, fallback: "user/no_image.jpg", size:'80x80' %>
+      <br>
+      <%= post.user.user_name %>
+      <span class="small text-secondary">　(<%= post.user.user_name_id %>)</span>
+      <br>
+      <span class="small">予算：<%= post.time_required %>円</span>
+      <span class="small"> / </span>
+      <span class="small">所要時間：<%= post.budget %>分</span>
+      <br>
+      <span><%= simple_format(h(post.action)) %></span>
+      <span>
+        <% if user_signed_in? %>
+          <div class="row pl-3">
+            <div class="favorite_btn_<%= post.id %>">
+              <%= render partial: "public/favorites/favorite", locals: { post: post} %>
+            </div>
+            <%= link_to post_path(post), class:"text-decoration-none ml-2" do %>
+              <div class="btn btn-sm btn-secondary text-white">
+                <i class="fas fa-comments"></i>
+                <%= post.comments.count %>
+              </div>
+            <% end %>
+            <div class="post_btn_<%= post.id %>">
+              <%= render partial: "public/reports/post_report_btn", locals: { post: post} %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to "♡#{post.favorites.count}", new_user_session_path, class:"btn btn-sm btn-secondary text-white", data: {confirm: "ログインユーザーのみ利用できます。\nログイン画面に移動しますか？"} %>
+          <%= link_to post_path(post), class:"text-decoration-none" do %>
+            <div class="btn btn-sm btn-secondary text-white">
+              <i class="fas fa-comments"></i>
+              <%= post.comments.count %>
+            </div>
+          <% end %>
+        <% end %>
+      </span>
+    </div>
+    <div class="col-4 mx-auto">
+      <% if post.post_images.present? %>
+        <div class="slider">
+          <% post.post_images.each do |image| %>
+            <%= attachment_image_tag image, :image, :fill, 300, 300 %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

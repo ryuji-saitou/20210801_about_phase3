@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <% if user_signed_in? && @user == current_user %>
+        <div class="row">
+          <div class="col-11">
+            <h3>My page</h3>
+          </div>
+          <div class="col-1">
+            <%= link_to edit_user_path do %>
+              <h3><i class="fas fa-user-cog text-right"></i></h3>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="col-11">
+            <h3>User page</h3>
+          </div>
+        </div>
+      <% end %>
+      <%= render "public/users/user_detail", user: @user %>
+      <div class="py-3"><!--上下余白div--></div>
+      <div class="border p-3">
+        <h5><strong><%= @user.user_name %>の投稿一覧</strong></h5>
+        <%= render partial: "public/posts/post_detail", collection: @user.posts, as: "post" %>
+      </div>
+    </div>
+  </div>
+</div>

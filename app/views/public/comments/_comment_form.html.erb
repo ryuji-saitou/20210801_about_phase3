@@ -1,0 +1,10 @@
+<h5><strong>コメント投稿</strong></h5>
+<div class="row">
+  <div class="col-12 text-right">
+    <%= form_with model:[post, comment], remote: true do |f| %>
+      <%= f.text_area :comment, class:"col-12", placeholder: "コメント入力" %><br>
+      <%= f.submit "コメント投稿" %>
+    <% end %>
+  </div>
+</div>
+<div class="col-11 mx-auto my-3 border"></div>

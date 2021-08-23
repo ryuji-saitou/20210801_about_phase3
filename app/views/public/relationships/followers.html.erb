@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h3>フォロワー</h3>
+      <div class="py-1"><!--上下余白div--></div>
+      <div class="border p-3">
+        <% if @users.present? %>
+          <%= render partial: "public/users/user_list", collection: @users, as: "user" %>
+        <% else %>
+          <div class="col-12 mx-auto">
+            <p class="text-center">
+              フォローされているユーザーはいません
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
