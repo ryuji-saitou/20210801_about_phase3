@@ -75,38 +75,40 @@ document.addEventListener("turbolinks:load", function(){
   		$('.start').fadeOut(500);
   	},2500); //2.5秒後にロゴ含め真っ白背景をフェードアウト！
   });
-});
 // ▲topアニメーション
 
 // ▼aboutページ
 // ページ表示とともに画像出現
-setTimeout(() => {
+  setTimeout(() => {
+    jQuery(function ($) {
+      var fadeIn = $('.fade-in');
+      // $(window).on('scroll', function () {
+      $(fadeIn).each(function () {
+        var offset = $(this).offset().top;
+        var scroll = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        if (scroll > offset - windowHeight + 300) {
+          $(this).addClass("scroll-in");
+        }
+      });
+      // });
+    });
+  }, 2800);
+
+// ページ表示後スクロールでテキスト出現
   jQuery(function ($) {
     var fadeIn = $('.fade-in');
-    // $(window).on('scroll', function () {
-    $(fadeIn).each(function () {
-      var offset = $(this).offset().top;
-      var scroll = $(window).scrollTop();
-      var windowHeight = $(window).height();
-      if (scroll > offset - windowHeight + 300) {
-        $(this).addClass("scroll-in");
-      }
-    });
-    // });
-  });
-}, 2800);
-
-jQuery(function ($) {
-  var fadeIn = $('.fade-in');
-  $(window).on('scroll', function () {
-    $(fadeIn).each(function () {
-      var offset = $(this).offset().top;
-      var scroll = $(window).scrollTop();
-      var windowHeight = $(window).height();
-      if (scroll > offset - windowHeight + 150) {
-        $(this).addClass("scroll-in");
-      }
+    $(window).on('scroll', function () {
+      $(fadeIn).each(function () {
+        var offset = $(this).offset().top;
+        var scroll = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        if (scroll > offset - windowHeight + 150) {
+          $(this).addClass("scroll-in");
+        }
+      });
     });
   });
 });
+
 // ▲aboutページ
