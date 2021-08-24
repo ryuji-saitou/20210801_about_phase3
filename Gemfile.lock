@@ -89,7 +89,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    childprocess (3.0.0)
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
@@ -116,6 +115,13 @@ GEM
       railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.8.1)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (2.19.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.3)
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
@@ -278,7 +284,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     ruby_dep (1.5.0)
-    rubyzip (2.3.2)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -298,9 +303,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (3.142.7)
-      childprocess (>= 0.5, < 4.0)
-      rubyzip (>= 1.2.2)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -356,6 +358,8 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  factory_bot_rails
+  faker
   font-awesome-sass (~> 5.13)
   jbuilder (~> 2.5)
   jquery-rails
@@ -370,7 +374,6 @@ DEPENDENCIES
   rspec-rails
   rubocop-airbnb
   sass-rails (~> 5.0)
-  selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

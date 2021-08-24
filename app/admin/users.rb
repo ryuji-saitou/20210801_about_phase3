@@ -10,11 +10,15 @@ ActiveAdmin.register User do
   end
 
   permit_params(
+    # ▼20210824追記 - 記述することでactiveadmin内でemailを編集可能になった
+    :email,
+    # ▲
     :user_name,
     :user_name_id,
     :profile_image,
     :profile_introduction,
     :profile_sns_link,
+    :birthday,
     :is_delete
   )
 
