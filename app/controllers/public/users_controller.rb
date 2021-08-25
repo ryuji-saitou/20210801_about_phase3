@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
+  before_action :correct_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -26,5 +28,10 @@ class Public::UsersController < ApplicationController
       :profile_introduction,
       :profile_sns_link
     )
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_path unless @user == current_user
   end
 end

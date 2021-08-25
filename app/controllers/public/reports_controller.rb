@@ -1,4 +1,6 @@
 class Public::ReportsController < ApplicationController
+  before_action :authenticate_user!
+
   def post_report_create
     @post = Post.find(params[:post_id])
     @report = Report.new
