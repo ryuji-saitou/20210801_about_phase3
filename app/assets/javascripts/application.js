@@ -69,16 +69,18 @@ function radio_search_target(){
 document.addEventListener("turbolinks:load", function(){
   $(function() {
   	setTimeout(function(){
-  		$('.start p').fadeIn(1600);
+  		$('.start p').fadeIn(2000);
   	},500); //0.5秒後にロゴをフェードイン!
   	setTimeout(function(){
-  		$('.start').fadeOut(500);
-  	},2500); //2.5秒後にロゴ含め真っ白背景をフェードアウト！
+  		$('.start').fadeOut(600);
+  	},3000); //3秒後にロゴ含め真っ白背景をフェードアウト！
   });
+});
 // ▲topアニメーション
 
 // ▼aboutページ
 // ページ表示とともに画像出現
+document.addEventListener("turbolinks:load", function(){
   setTimeout(() => {
     jQuery(function ($) {
       var fadeIn = $('.fade-in');
@@ -94,8 +96,10 @@ document.addEventListener("turbolinks:load", function(){
       // });
     });
   }, 2800);
+});
 
 // ページ表示後スクロールでテキスト出現
+document.addEventListener("turbolinks:load", function(){
   jQuery(function ($) {
     var fadeIn = $('.fade-in');
     $(window).on('scroll', function () {
@@ -110,5 +114,4 @@ document.addEventListener("turbolinks:load", function(){
     });
   });
 });
-
 // ▲aboutページ

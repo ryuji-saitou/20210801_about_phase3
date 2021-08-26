@@ -53,11 +53,10 @@ class Public::PostsController < ApplicationController
   def post_params
     # 複数画像アップ時、PostImageへは配列でデータを渡すこと
     params.require(:post).permit(:action, :time_required, :budget, post_images_images: [])
+  end
 
   def correct_user
     @post = Post.find(params[:id])
     redirect_to root_path unless @post.user == current_user
-  end
-
   end
 end
