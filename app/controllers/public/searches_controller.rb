@@ -9,14 +9,14 @@ class Public::SearchesController < ApplicationController
       # @postに対して、params[:search_target].present? 存在する場合...
       # true  = Post.post_search(@search_params)を入れる
       # false = 何も入れない
-      @posts = params[:search_target].present? ? Post.post_search(@search_params) : []
+      @posts = params[:search_target].present? ? Post.post_search(@search_params).order(created_at: :desc) : []
       render :search
     # 検索対象が "user" の場合の処理
     elsif params[:search_target] == "user"
       sort_column    = params[:column].presence || 'id'
       @search_params = user_search_params
       @users = User.user_search(@search_params)
-                   .order(sort_column + ' ' + sort_direction)
+                   .order(sort_column + ' ' + sort_direction, created_at: :desc)
       render :search
     end
   end
@@ -25,7 +25,7 @@ class Public::SearchesController < ApplicationController
     # 検索対象が "post" の場合の処理
     if params[:search][:search_target] == "post"
       @search_params = post_search_params
-      @posts = Post.post_search(@search_params)
+      @posts = Post.post_search(@search_params).order(created_at: :desc)
       render :search
     # 検索対象が "user" の場合の処理
     elsif params[:search][:search_target] == "user"
