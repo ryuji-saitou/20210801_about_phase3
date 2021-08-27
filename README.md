@@ -56,5 +56,6 @@
 |IDE|Cloud9|
 
 ## 使用素材
-- https://publicdomainq.net/old-man-grandfather-0037661/
--
+- aboutページ：https://www.photock.jp/detail/beer/2664/
+- User用no image：https://icon-library.com/icon/no-profile-pic-icon-11.html
+- Post用no image：http://design-ec.com/?p=55

@@ -8,7 +8,7 @@
           <div class="col-4">イメージ画像</div>
           <div class="col-8 text-left text-secondary">
             <% if @post.post_images.blank? %>
-              <span>- no image -</span>
+              <%= image_tag "post/no_image.jpg", class:"col-5" %>
             <% else %>
               <div class="slider col-11 text-center">
                 <% @post.post_images.each do |image| %>
