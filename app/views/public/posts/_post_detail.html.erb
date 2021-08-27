@@ -39,14 +39,14 @@
       </span>
     </div>
     <div class="col-4 mx-auto">
-      <% if post.post_images.present? %>
+      <% if post.post_images.blank? %>
+        <%= image_tag "post/no_image.jpg", class:"col-8" %>
+      <% else %>
         <div class="slider">
           <% post.post_images.each do |image| %>
             <%= attachment_image_tag image, :image, :fill, 300, 300 %>
           <% end %>
         </div>
-      <% else %>
-        <%= image_tag "post/no_image.jpg", class:"col-8" %>
       <% end %>
     </div>
   </div>
