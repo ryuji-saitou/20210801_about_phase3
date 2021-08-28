@@ -8,8 +8,9 @@ class Public::HomesController < ApplicationController
       elsif params[:tab] == 'timeline' || !params[:tab].present?
         user = User.find(current_user.id)
         @users = user.followings
-        # 下記where後 "user_id: [@users, current_user]" にすることで自分の投稿もタイムラインに表示する
-        @follow_posts = Post.where(user_id: [@users, current_user]).order("created_at DESC").page(params[:page]).per(5)
+        # 元コード：@follow_posts = Post.where(user_id: users).order("created_at DESC").page(params[:page]).per(5)
+        # "or.(Post.where(user_id: current_user.id))" を追記して自分の投稿も拾うようにした。
+        @follow_posts = Post.where(user_id: @users).or(Post.where(user_id: current_user.id)).order("created_at DESC").page(params[:page]).per(5)
       end
 
     else
