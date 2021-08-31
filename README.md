@@ -42,6 +42,7 @@
 |[ER図](https://drive.google.com/file/d/12PufPQyxhqyeGBKAvogefcdwIJKk6vYA/view?usp=sharing)|
 |[テーブル定義書](https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing)|
 |[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1xUPppoxSEwaXXrGnYJ-xbg8mi3kSRpQAnePOb5LbLIs/edit?usp=sharing)|
+|[プレゼンテーション資料](https://docs.google.com/presentation/d/1JyJHiTEBfFDDX5T5hCbaN4GXR58ww3kK72Ky-3TwLUg/edit?usp=sharing)|
 
 ## チャレンジ要素一覧
 [外部リンク(googleスプレッドシート)を参照](https://docs.google.com/spreadsheets/d/1BkMUnL6wkStNWFZMsXqk6fRymK1LdaT3vuIrPt6fOW8/edit?usp=sharing)
