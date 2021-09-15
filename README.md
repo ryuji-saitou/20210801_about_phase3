@@ -43,6 +43,8 @@
 |[テーブル定義書](https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing)|
 |[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1xUPppoxSEwaXXrGnYJ-xbg8mi3kSRpQAnePOb5LbLIs/edit?usp=sharing)|
 |[プレゼンテーション資料](https://docs.google.com/presentation/d/1JyJHiTEBfFDDX5T5hCbaN4GXR58ww3kK72Ky-3TwLUg/edit?usp=sharing)|
+|AWS構成図 ※下記画像参照|
+|![PF_AWS構成図](https://user-images.githubusercontent.com/83700567/133443644-8e9fb787-1363-4917-8277-ff996ec2874d.jpg)|
 
 ## チャレンジ要素一覧
 [外部リンク(googleスプレッドシート)を参照](https://docs.google.com/spreadsheets/d/1BkMUnL6wkStNWFZMsXqk6fRymK1LdaT3vuIrPt6fOW8/edit?usp=sharing)
@@ -58,5 +60,5 @@
 
 ## 使用素材
 - aboutページ：https://www.photock.jp/detail/beer/2664/
-- User用no image：https://icon-library.com/icon/no-profile-pic-icon-11.html
-- Post用no image：http://design-ec.com/?p=55
+- User用"no_image"：https://icon-library.com/icon/no-profile-pic-icon-11.html
+- Post用"no_image：http://design-ec.com/?p=55
