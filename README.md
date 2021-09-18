@@ -43,10 +43,8 @@
 |[テーブル定義書](https://docs.google.com/spreadsheets/d/1QCaKV1CLxRJDvIDhSWpw_ohA4FQrFgWvivVUIVi2mKc/edit?usp=sharing)|
 |[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1xUPppoxSEwaXXrGnYJ-xbg8mi3kSRpQAnePOb5LbLIs/edit?usp=sharing)|
 |[プレゼンテーション資料](https://docs.google.com/presentation/d/1JyJHiTEBfFDDX5T5hCbaN4GXR58ww3kK72Ky-3TwLUg/edit?usp=sharing)|
-|AWSインフラ設計書 ※下記画像または[googleスプレッドシート](https://docs.google.com/spreadsheets/d/1K1VFYdtUu1nEcGxzqSd9wLpqlqMPtvvqllnt0w81TkU/edit#gid=0)参照|
-|![image](https://user-images.githubusercontent.com/83700567/133884152-b407c040-c130-4781-bb50-2a323b535c46.png)|
-|AWS構成図 ※下記画像参照|
-|![image](https://user-images.githubusercontent.com/83700567/133443644-8e9fb787-1363-4917-8277-ff996ec2874d.jpg)|
+|AWSインフラ設計書 ※下記画像または[googleスプレッドシート](https://docs.google.com/spreadsheets/d/1K1VFYdtUu1nEcGxzqSd9wLpqlqMPtvvqllnt0w81TkU/edit#gid=0)参照<br>![image](https://user-images.githubusercontent.com/83700567/133884152-b407c040-c130-4781-bb50-2a323b535c46.png)|
+|AWS構成図 ※下記画像参照<br>![image](https://user-images.githubusercontent.com/83700567/133443644-8e9fb787-1363-4917-8277-ff996ec2874d.jpg)|
 
 ## チャレンジ要素一覧
 [外部リンク(googleスプレッドシート)を参照](https://docs.google.com/spreadsheets/d/1BkMUnL6wkStNWFZMsXqk6fRymK1LdaT3vuIrPt6fOW8/edit?usp=sharing)
